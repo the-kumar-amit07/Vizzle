@@ -1,0 +1,15 @@
+{
+  "name": "vizzle",
+  "version": "1.0.0",
+  "description": "Video Streaming Platform ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "JavaScript",
+    "Express"
+  ],
+  "author": "Amit Kumar Marndi",
+  "license": "ISC"
+}
