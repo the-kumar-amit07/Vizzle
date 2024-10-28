@@ -1,7 +1,7 @@
 {/* Approach-One */}
-const asyncHandler = () => {
-    (req,res,nxt) => {
-        Promise.resolve(asyncHandler(req,res,nxt))
+const asyncHandler = (requestHandler) => {
+    return (req,res,nxt) => {
+        Promise.resolve(requestHandler(req,res,nxt))
                 .catch((error)=> nxt(error))
     }
 }
