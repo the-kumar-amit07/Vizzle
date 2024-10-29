@@ -6,7 +6,7 @@ import dotenv from "dotenv"
 
 //Approach Two
 dotenv.config({
-    path : './env'
+    path : './.env'
 })
 
 connectDB()
