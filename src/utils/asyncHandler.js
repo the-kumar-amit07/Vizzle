@@ -16,7 +16,7 @@ export { asyncHandler }
         res.status(error.code || 400).json({
             success: false,
             message: error.message
-        })
+        }) 
     }
     }
 */}
