@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import {ApiErrors} from "../utils/ApiErrors.js"
 import { User } from "../models/user.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
-import { ApiResponce } from "../utils/ApiResponce.js"
+import { ApiResponse } from "../utils/ApiResponse.js"
 
 
 const generateRefreshAndAccessToken = async (userId) => {
@@ -15,7 +15,7 @@ const generateRefreshAndAccessToken = async (userId) => {
         await user.save({validateBeforeSave : true})
         return {refreshToken, accessToken}
     } catch (error) {
-        throw new ApiErrors(500,"Something went wrong while generating referesh and access token !");
+        throw new ApiErrors(500,"Something went wrong while generating refresh and access token !");
     }
 }
 
@@ -69,15 +69,15 @@ const registerUser = asyncHandler(async (req, res) => {
         avatar:avatar.url,
         coverImage:coverImage?.url || ""
     })
-    //-->check registeration successfull or not
+    //-->check registration successful or not
     const checkedUser = await User.findById(user._id).select("-password -refreshToken") //without password and refreshToken
     if (!checkedUser) {
         throw new ApiErrors(500,"Failed to register user");
     }
 
-    //responce to user
+    //response to user
     return res.status(201).json(
-        new ApiResponce(200,checkedUser,"User registered successfull !")
+        new ApiResponse(200,checkedUser,"User registered successful !")
     )
 })
 
@@ -109,13 +109,13 @@ const logInUser = asyncHandler(async (req,res) => {
         httpOnly: true,
         secure: true,
     }
-    //responce to user
+    //response to user
     return res
         .status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
         .json(
-            new ApiResponce(200,
+            new ApiResponse(200,
             {
                 user: loggedInUser,accessToken,refreshToken
             },
@@ -137,12 +137,12 @@ const logOutUser = asyncHandler(async (req, res) => {
         httpOnly: true,
         secure: true,
     }
-    //responce to user
+    //response to user
     return res
         .status(200)
         .clearCookie("accessToken", options)
         .clearCookie("refreshToken", options)
-        .json(new ApiResponce(200, {}, "User logged out successfully !"))
+        .json(new ApiResponse(200, {}, "User logged out successfully !"))
 })
 
 export {
