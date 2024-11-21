@@ -60,7 +60,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiErrors(400,"avatar required");
     }
 
-    //-->create new user in database
+    //-->create new-user in database
     const user = await User.create({
         fullName,
         email,
