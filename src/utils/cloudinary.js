@@ -8,7 +8,7 @@ import fs from "fs"
         api_secret: process.env.CLOUDINARY_API_SECRET 
     })
 
-    const uploadOnCloudinary = async (localFilePath) => {
+const uploadOnCloudinary = async (localFilePath) => {
         try {
             if (!localFilePath) return null;
             const response = await cloudinary.uploader.upload(localFilePath, {
@@ -23,6 +23,29 @@ import fs from "fs"
             console.error("Error uploading file to cloudinary", error);
             return null;
         }
-}
+    }
 
-export {uploadOnCloudinary}
+const deleteFromCloudinary = async (publicId) => {
+        try {
+            if (!publicId) return null;
+            const response = await cloudinary.uploader.destroy(publicId);
+            console.log("Deleted from Cloudinary:", response);
+            fs.unlinkSync(publicId)
+            return response;
+        } catch (error) {
+            console.error("Error deleting file from Cloudinary", error);
+            return null;
+        }
+}
+const extractPublicIdFromUrl = (url) => {
+    if (!url) return null;
+    const regex = /\/v\d+\/([^/.]+)\.[a-z]+$/; // Matches public_id in the Cloudinary URL
+    const match = url.match(regex);
+    return match ? match[1] : null;
+};
+
+export {
+    uploadOnCloudinary,
+    deleteFromCloudinary,
+    extractPublicIdFromUrl,
+}
