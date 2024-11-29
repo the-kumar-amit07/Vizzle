@@ -1,13 +1,20 @@
 import mongoose, { Schema } from "mongoose";
 const roomSchema = new Schema({
-    video: {
+    videoId: {
         type: Schema.Types.ObjectId,
-        ref: 'Video'
+        ref: 'Video',
+        required: true
     },
-    participants: {
+    title: {
+        type: String,
+        required: true
+    },
+    participants: [
+        {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    },
+        }
+    ],
     currentTime: {
         type: Number,
         default: 0

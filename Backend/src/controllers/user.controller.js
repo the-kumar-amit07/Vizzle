@@ -28,12 +28,12 @@ const registerUser = asyncHandler(async (req, res) => {
     //check if user already exists
     // console.log("user email:", email);
 
-    //--> validation for field to check it's empty or not 
+    // validation for field to check it's empty or not 
     if ([fullName,email,userName,password].some((field) => field?.trim() === ""))  {
         throw new ApiErrors (400,"All fields are required!");
     }
 
-    //-->check the user already exist or not
+    //check the user already exist or not
     const existingUser = await User.findOne({
         $or:[{userName},{email}]
     })
@@ -62,7 +62,7 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new ApiErrors(400,"avatar required");
     }
 
-    //-->create new-user in database
+    //create new-user in database
     const user = await User.create({
         fullName,
         email,
@@ -71,7 +71,7 @@ const registerUser = asyncHandler(async (req, res) => {
         avatar:avatar.url,
         coverImage:coverImage?.url || ""
     })
-    //-->check registration successful or not
+    //check registration successful or not
     const checkedUser = await User.findById(user._id).select("-password -refreshToken") //without password and refreshToken
     if (!checkedUser) {
         throw new ApiErrors(500,"Failed to register user");
@@ -327,12 +327,14 @@ const getChannel = asyncHandler(async (req, res) => {
         },
         {
             $addFields: {
-                subscriberCount: { $size: "subscriber" },
-                subscribedCount: { $size: "subscribers" },
+                subscriberCount: { $size: "$subscribers" },
+                subscribedCount: { $size: "$subscribed" },
                 isSubscribed: {
-                    if: { $in: [req.user?._id, "$subscribers.subscriber"] },
-                    then: true,
-                    else: false
+                    $cond: {
+                        if: { $in: [req.user?._id, "$subscribers.subscriber"] },
+                        then: true,
+                        else: false
+                    }
                 },
             }
         },
