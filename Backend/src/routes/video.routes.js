@@ -4,11 +4,9 @@ import { varifyJWT } from "../middlewares/auth.middleware.js";
 import { deleteVideo, getAllVideos, getVideoById, updateVideo, uploadVideo } from "../controllers/video.controller.js";
 
 const router = Router();
-router.use(varifyJWT)
 
-router.route("/")
-    .get(getAllVideos)
-    .post(upload.fields([
+router.route("/upload").post(
+    upload.fields([
         {
             name: "videoFile",
             maxCount: 1,
@@ -17,11 +15,11 @@ router.route("/")
             name: "thumbnail",
             maxCount: 1,
         }
-    ]), uploadVideo);
+    ]),varifyJWT, uploadVideo);
 
-router.route("/")
-    .get(getVideoById)
-    .delete(deleteVideo)
-    .patch(upload.single("thumbnail"), updateVideo)
+router.route("/v/:videoId").get(getVideoById)
+router.route("/").get(getAllVideos)
+router.route("/v/:videoId").put(varifyJWT,updateVideo)
+router.route("/v/:videoId").delete(varifyJWT,deleteVideo)
 
 export default router;

@@ -8,6 +8,8 @@ import mongoose from "mongoose";
 //--->uploadVideo
 const uploadVideo = asyncHandler(async (req,res) => {
     const { title, description, isPublished, duration } = req.body;
+    // console.log("req.body",req.body);
+    
     if ([title, description, duration].some((field) => field?.trim() === "")) {
         throw new ApiErrors.Error(400,"Title, description, and duration are required!");
     }
@@ -19,6 +21,8 @@ const uploadVideo = asyncHandler(async (req,res) => {
     const videoFile = await uploadOnCloudinary(videoFilePath)
     const thumbnail = await uploadOnCloudinary(thumbnailFilePath)
 
+    // console.log("video file path::",videoFilePath);
+
     if (!videoFile?.url || !thumbnail?.url) {
         throw new ApiErrors.Error(500, "Failed to upload video or thumbnail!")
     }
@@ -28,8 +32,9 @@ const uploadVideo = asyncHandler(async (req,res) => {
         title,
         description,
         duration,
-        owner : req.user._id,
         isPublished : isPublished || true,
+        owner : req.user._id,
+        
     })
 
     return res

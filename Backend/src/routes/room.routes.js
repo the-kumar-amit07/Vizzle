@@ -4,8 +4,8 @@ import { createRoom, getRoomInfo, joinRoom } from "../controllers/room.controlle
 
 const router = Router();
 
-router.route("/create", varifyJWT, createRoom);
-router.route("/:roomId/join", varifyJWT, joinRoom);
-router.route("/:roomId", varifyJWT, getRoomInfo)
+router.route("/create").post(varifyJWT, createRoom);
+router.route("/:roomId/join").post(varifyJWT, joinRoom);
+router.route("/:roomId").get(varifyJWT, getRoomInfo)
 
 export default router;
