@@ -27,6 +27,17 @@ const roomSchema = new Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    inviteToken: {
+        type: String,
+        default: null
     }
-},{timestamps:true})
+}, { timestamps: true })
+
+roomSchema.pre("save", function (nxt) {
+    if (!this.inviteToken) {
+        this.inviteToken = new mongoose.Types.ObjectId().toString();
+    }
+    nxt();
+})
 export const Room = mongoose.model("Room",roomSchema)

@@ -166,7 +166,9 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         //set the cookie
         const options = {
             httpOnly: true,
-            secure: true
+            secure: isProduction,
+            sameSite: isProduction ? 'Strict' : 'Lax',
+            path: '/',
         }
         res.status(200)
             .cookie("accessToken", accessToken, options)
