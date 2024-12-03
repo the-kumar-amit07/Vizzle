@@ -28,7 +28,7 @@ const createRoom = asyncHandler(async (req,res) => {
         participants:[userId]
     })
 
-    const inviteLink = `${BASE_URL}/room/${room._id}`
+    const inviteLink = `${BASE_URL}/room/join/${room.inviteToken}`;
 
     return res
         .status(201)
@@ -37,13 +37,13 @@ const createRoom = asyncHandler(async (req,res) => {
 
 //---> joinRoom
 const joinRoom = asyncHandler(async (req, res) => {
-    const { roomId } = req.params;
+    const { inviteToken } = req.params;
     const userId = req.user._id;
-    if (!roomId) {
+    if (!inviteToken) {
         throw new ApiErrors(400, "Room ID is required!");
     }
 
-    const room = await Room.findById(roomId);
+    const room = await Room.findOne(inviteToken);
     if (!room) {
         throw new ApiErrors(400, "Room not Found.");
     }
@@ -118,17 +118,18 @@ const getRoomInfo = asyncHandler(async (req, res) => {
 
 //getInviteLink (existing room link)
 const getInviteLink = asyncHandler(async (req, res) => {
-    const { roomId } = req.params;
-    if (!roomId) {
+    const { inviteToken } = req.params;
+    if (!inviteToken) {
         throw new ApiErrors(400,"Room ID is required!")
     }
 
-    const room = await Room.findById(roomId);
+    const room = await Room.findOne(inviteToken);
     if (!room) {
         throw new ApiErrors(404, "Room not found.");
     }
 
-    const inviteLink = `${BASE_URL}/room/${room._id}`
+    const inviteLink = `${BASE_URL}/room/join/${room.inviteToken}`;
+
 
     return res
         .status(200)
