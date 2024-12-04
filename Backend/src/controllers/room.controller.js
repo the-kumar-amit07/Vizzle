@@ -130,7 +130,6 @@ const getInviteLink = asyncHandler(async (req, res) => {
 
     const inviteLink = `${BASE_URL}/room/join/${room.inviteToken}`;
 
-
     return res
         .status(200)
         .json(new ApiResponse(200, inviteLink, "Invite link generated successfully."));
