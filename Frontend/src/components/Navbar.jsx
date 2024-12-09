@@ -24,11 +24,11 @@ function Navbar() {
         <div className='flex items-center justify-between p-5'>
             <div className=' flex gap-8 items-center navItem '>
                 <img src={logo} alt="" className='w-[80px] md:w-[115px] object-cover' />
-                <div className='flex items-center gap-3 menu'>
+                <div className='flex items-center gap-8 menu'>
                 {menu.map((item) => (
-                    <button key={item.name} className='flex items-center gap-2 cursor-pointer font-semibold text-[18px]'>
+                    <button key={item.name} className='flex items-center gap-2 cursor-pointer font-semibold hover:underline underline-offset-8 text-[18px]'>
                         {item.icon}
-                        {item.name}
+                        <span className='hidden md:inline'>{item.name}</span>
                     </button>
                 ))}
                 </div>

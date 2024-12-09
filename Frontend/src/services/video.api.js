@@ -31,9 +31,9 @@ export class VideoService {
         }
     }
 
-    async getAllVideos({ page = 1, limit = 10,query = '', sortBy = 'createdAt',sortType = 'desc',userId }) {
+    async getAllVideos({ page = 1, limit = 10,query = '', sortBy = 'createdAt',sortType = 'desc',category ,userId }) {
         try {
-            const params = { page, limit, query, sortBy, sortType, userId }
+            const params = { page, limit, query, sortBy, sortType, category ,userId }
             const response = await this.apiClient.get('/', { params })
             return response.data;
         } catch (error) {

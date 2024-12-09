@@ -9,7 +9,7 @@ const Avatar = ({ avatarUrl, userName, onClick }) => {
         onClick={onClick}
         >
         {/* Avatar Image */}
-        <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-lg border-4 border-transparent group-hover:border-blue-500">
+        <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-lg border-4 border-transparent group-hover:border-[#A3FB73]">
             <img
             src={avatarUrl}
             alt={`${userName}'s avatar`}

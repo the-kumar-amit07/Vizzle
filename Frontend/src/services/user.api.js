@@ -17,8 +17,8 @@ export class UserService {
         email,
         userName,
         password,
-        avatarFile,
-        coverImageFile
+        avatar,
+        coverImage
     }) {
         try {
             const formData = new FormData();
@@ -26,12 +26,17 @@ export class UserService {
             formData.append("email", email);
             formData.append("userName", userName);
             formData.append("password", password);
-            if (avatarFile) formData.append("avatar", avatarFile);
-            if (coverImageFile) formData.append("coverImage", coverImageFile);
+            if (avatar) formData.append("avatar", avatar[0]);
+            if (coverImage) formData.append("coverImage", coverImage[0]);
 
-            const response = await this.apiClient.post("/users/register", formData, {
+            const response = await this.apiClient.post("/api/v1/users/register", formData,
+                {
                 headers: { "Content-Type": "multipart/form-data" }
-            })
+                }
+            )
+            if (response) {
+                return await this.loginUser({email,userName,password})
+            }
             return response.data;
         } catch (error) {
             console.error(`UserService::registerUser::error::${error}`);
@@ -46,7 +51,7 @@ export class UserService {
     }) {
         try { 
             const userData = { userName, email, password };
-            const response = await this.apiClient.post("/users/login", userData)
+            const response = await this.apiClient.post("/api/v1/users/login", userData)
             return response.data;
         }
         catch (error) {
@@ -57,7 +62,7 @@ export class UserService {
 
     async logoutUser() {
         try { 
-            const response = await this.apiClient.post("/users/logout")
+            const response = await this.apiClient.post("/api/v1/users/logout")
             return response.data;
         }
         catch (error) {
@@ -72,7 +77,7 @@ export class UserService {
     }) {
         try {
             const userData = { oldPassword, newPassword };
-            const response = await this.apiClient.post("/users/change-password", userData)
+            const response = await this.apiClient.post("/api/v1/users/change-password", userData)
             return response.data;
         } catch (error) {
             console.error(`UserService::changePassword::error::${error}`);
@@ -82,7 +87,7 @@ export class UserService {
 
     async getCurrentUser() {
         try {
-            const response = await this.apiClient.get("/users/current-user")
+            const response = await this.apiClient.get("/api/v1/users/current-user")
             return response.data;
         }
         catch (error) {
@@ -94,7 +99,7 @@ export class UserService {
     async updateAccountDetails({ email, fullName }) {
         try { 
             const userData = { email, fullName };
-            const response = await this.apiClient.put("/users/update-account", userData)
+            const response = await this.apiClient.put("/api/v1/users/update-account", userData)
             return response.data;
         }
         catch (error) {
@@ -107,8 +112,8 @@ export class UserService {
         try { 
             const formData = new FormData();
             formData.append("avatar", avatarFile);
-            const response = await this.apiClient.post("/users/avatar", formData, {
-                headers: { "Content-Type": "application/json" }
+            const response = await this.apiClient.post("/api/v1/users/avatar", formData, {
+                headers: { "Content-Type": "multipart/form-data" }
             })
             return response.data;
         }
@@ -122,7 +127,7 @@ export class UserService {
         try { 
             const formData = new FormData();
             formData.append("coverImage", coverImageFile);
-            const response = await this.apiClient.post("/users/cover-image", formData,
+            const response = await this.apiClient.post("/api/v1/users/cover-image", formData,
                 { headers: { "Content-Type": "multipart/form-data" } })
             return response.data;
         }
@@ -134,7 +139,7 @@ export class UserService {
 
     async getChannel(userName) {
         try { 
-            const response = await this.apiClient.get(`users/c/${userName}`);
+            const response = await this.apiClient.get(`/api/v1/users/c/${userName}`);
             return response.data;
         }
         catch (error) {
@@ -145,7 +150,7 @@ export class UserService {
 
     async getWatchHistory() {
         try { 
-            const response = await this.apiClient.get("/users/history");
+            const response = await this.apiClient.get("/api/v1/users/history");
             return response.data;
         }
         catch (error) {

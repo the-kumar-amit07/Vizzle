@@ -1,24 +1,28 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
+/* eslint-disable react/prop-types */
+import React,{useId} from "react";
 
-function Input() {
+function Input({label,type = "text",className = "",...props},ref) {
+
+    const id = useId();
     return (
-    <label
-        htmlFor="Username"
-        className="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+    label && (
+            <label htmlFor= {id}
+            className="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-[#A3FB73] focus-within:ring-1 focus-within:ring-[#A3FB73]"
     >
         <input
-        type="text"
-        id="Username"
-        className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
-        placeholder="Username"
+        type={type}
+        id={id}
+        ref={ref}
+        {...props}
+        className={`flex peer h-10 p-2 border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0`}
         />
 
-        <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-        Username
+        <span className={`pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 p-0.5 text-xs ${className} text-gray-100 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs`}>
+        {label}
         </span>
     </label>
+        )
     );
 }
 
-export default Input;
+export default React.forwardRef(Input);

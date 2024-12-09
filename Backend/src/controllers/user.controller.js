@@ -45,8 +45,8 @@ const registerUser = asyncHandler(async (req, res) => {
     const avatarLocalPath = req.files?.avatar[0]?.path;
     // const coverImageLocalPath = req.files?.coverImage[0]?.path;
     let coverImageLocalPath;
-    if (req.files && req.files.coverImage.length > 0 && Array.isArray(req.files.coverImage)) {
-        coverImageLocalPath = req.files.coverImage[0].path
+    if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0 ) {
+        coverImageLocalPath = req.files.coverImage[0]?.path
     }
 
     console.log("avatar local path:", avatarLocalPath,)
@@ -108,8 +108,11 @@ const logInUser = asyncHandler(async (req,res) => {
 
     //set the cookie
     const options = {
-        httpOnly: true,
-        secure: true,
+        httpOnly: true,               // Prevent JavaScript access
+        secure: false,                // Not using HTTPS in development
+        sameSite: 'Lax',              // Allow some cross-origin requests for testing
+        maxAge: 3600000,              // 1 hour expiration
+        path: '/',
     }
     //response to user
     return res
@@ -136,8 +139,11 @@ const logOutUser = asyncHandler(async (req, res) => {
     })
     //set the cookie
     const options = {
-        httpOnly: true,
-        secure: true,
+        httpOnly: true,               // Prevent JavaScript access
+        secure: false,                // Not using HTTPS in development
+        sameSite: 'Lax',              // Allow some cross-origin requests for testing
+        maxAge: 3600000,              // 1 hour expiration
+        path: '/',
     }
     //response to user
     return res
@@ -151,7 +157,7 @@ const logOutUser = asyncHandler(async (req, res) => {
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
     if (!incomingRefreshToken) {
-        throw new ApiErrors(401,"Unauthorized request !")
+        throw new ApiErrors(401,"Unauthorized request...!")
     }
     try {
         const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
@@ -160,16 +166,19 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             throw new ApiErrors(401,"Invalid refreshToken !")
         }
         if (incomingRefreshToken !== user?.refreshToken) {
-            throw new ApiErrors(401,"Refresh Token Expired !");
+            throw new ApiErrors(401, "Refresh Token Expired !");
         }
-        const { accessToken, newRefreshToken } = await generateRefreshAndAccessToken(user._id)
-        //set the cookie
+
+          //set the cookie
         const options = {
-            httpOnly: true,
-            secure: isProduction,
-            sameSite: isProduction ? 'Strict' : 'Lax',
+            httpOnly: true,               // Prevent JavaScript access
+            secure: false,                // Not using HTTPS in development
+            sameSite: 'Lax',              // Allow some cross-origin requests for testing
+            maxAge: 3600000,              // 1 hour expiration
             path: '/',
         }
+        
+        const { accessToken, newRefreshToken } = await generateRefreshAndAccessToken(user._id)
         res.status(200)
             .cookie("accessToken", accessToken, options)
             .cookie("refreshToken", newRefreshToken, options)

@@ -50,6 +50,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
         query = "",
         sortBy = "createdAt",
         sortType = "desc",
+        category,
         userId
     } = req.query
 
@@ -67,6 +68,10 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
     if (userId) {
         publishStatus.owner = new mongoose.Types.ObjectId(userId)
+    }
+
+    if (category) {
+        publishStatus.category = category
     }
 
     const video = await Video.aggregate([
@@ -90,9 +95,11 @@ const getAllVideos = asyncHandler(async (req, res) => {
                 title: 1,
                 description: 1,
                 views: 1,
+                videoFile:1,
                 thumbnail: 1,
                 duration: 1,
                 createdAt: 1,
+                category: 1,
                 "owner.userName": 1,
                 "owner.avatar": 1,
             },
