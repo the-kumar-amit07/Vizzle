@@ -12,13 +12,13 @@ export class VideoService {
         })
     }
 
-    async  uploadVideo({title,description,category,videoFile,thumbnail}) {  //if need ad duration isPublished
+    async  uploadVideo({title,description,category,isPublished,videoFile,thumbnail}) {  //if need ad duration 
         try {
             const formData = new FormData();
             formData.append("title", title);
             formData.append("description", description);
-            // formData.append("isPublished", isPublished);
             formData.append("category", category);
+            formData.append("isPublished", isPublished);
             // formData.append("duration", duration);
             formData.append("videoFile", videoFile[0]);
             formData.append("thumbnail", thumbnail[0]);

@@ -16,7 +16,16 @@ function VideoUpload() {
         handleSubmit,
         formState: { errors },
         setValue, // We use setValue to set files manually
-    } = useForm();
+    } = useForm(
+        {
+        defaultValues: {
+            title: "",
+            description: "",
+            category: "",
+            isPublished: true,
+        }
+    }
+    );
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -47,7 +56,7 @@ function VideoUpload() {
     };
 
     return (
-        <section className="min-h-screen flex items-center justify-center bg-[#1A2A4D] px-4">
+        <section className="min-h-screen flex items-center justify-center bg-[#040C2C] px-4">
         <div className="w-full max-w-lg bg-[#24325E] border border-gray-700 rounded-lg shadow-lg">
             <div className="px-8 py-6 text-center border-b border-gray-700">
             <h2 className="text-2xl font-semibold text-white">Upload Your Video</h2>
@@ -81,13 +90,20 @@ function VideoUpload() {
                 })}
                 error={errors.category?.message}
             />
+            <Toggle
+                        label="Publish Status"
+                        defaultChecked={true}
+                        {...register("isPublished")}
+                        onChange={(ev)=> setValue("isPublished",ev.target.checked)}
+                        error={errors.isPublished?.message}
+            />        
             <FileInput
                 label="Video File"
                 type="file"
                 {...register("videoFile", {
                 required: "Video File is required",
                 })}
-                onChange={(file) => setValue("videoFile", file)}
+                // onChange={(file) => setValue("videoFile", file)}
                 error={errors.videoFile?.message}
             />
             <FileInput
@@ -96,7 +112,7 @@ function VideoUpload() {
                 {...register("thumbnail", {
                 required: "Thumbnail is required",
                 })}
-                onChange={(file) => setValue("thumbnail", file)} 
+                // onChange={(file) => setValue("thumbnail", file)} 
                 error={errors.thumbnail?.message}
             />
             <Button

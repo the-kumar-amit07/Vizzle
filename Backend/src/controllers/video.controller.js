@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 
 //--->uploadVideo
 const uploadVideo = asyncHandler(async (req,res) => {
-    const { title, description,category } = req.body;  //if need ad duration
+    const { title, description, isPublished,category } = req.body;  //if need ad duration isPublished,
     // console.log("req.body",req.body); 
     
     if ([title,category, description].some((field) => field?.trim() === "")) {  //if need ad duration
@@ -33,7 +33,7 @@ const uploadVideo = asyncHandler(async (req,res) => {
         description,
         category,
         // duration,
-        // isPublished : isPublished || true,
+        isPublished : isPublished || true,
         owner : req.user._id,
         
     })
