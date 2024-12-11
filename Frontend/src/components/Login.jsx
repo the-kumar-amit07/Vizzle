@@ -2,7 +2,7 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
-import { LogIn, ArrowRightToLine } from "lucide-react";
+import { LogIn} from "lucide-react";
 import { Input, Button } from "./index";
 import userService from "../services/user.api.js";
 import { useDispatch } from "react-redux";
@@ -49,7 +49,7 @@ function Login() {
     }
     return (
         <section className="min-h-screen flex items-center justify-center bg-[#040C2C]">
-            <div className="w-full max-w-md px-6 py-8 bg-[#1A2A4D] border border-gray-200 rounded-lg shadow-md">
+            <div className="w-full max-w-md px-6 py-8 bg-[#24325E] border border-gray-200 rounded-lg shadow-md">
                 <div className="text-center">
                     <h2 className="text-3xl font-semibold text-gray-100">
                         Login
@@ -59,7 +59,7 @@ function Login() {
 
                 <Input
                     label="Email"
-                    className="bg-[#1A2A4D]"
+                    className="bg-[#24325E]"
                     placeholder="Enter Your Email Address"
                     {...register("email", {
                     required: "Email is required",
@@ -73,7 +73,7 @@ function Login() {
                     
                 <Input
                     label="User Name"
-                    className="bg-[#1A2A4D]"
+                    className="bg-[#24325E]"
                     placeholder="Enter Your User Name"
                     {...register("userName", {
                     required: "User Name is required",
@@ -84,7 +84,7 @@ function Login() {
                 <Input
                     label="Password"
                     type="password"
-                    className="bg-[#1A2A4D]"
+                    className="bg-[#24325E]"
                     placeholder="Enter Your Password"
                     {...register("password", {
                     required: "Password is required",
@@ -94,7 +94,7 @@ function Login() {
                 
                 <Button
                     type="submit"
-                    className="flex items-center justify-center w-full bg-[#9FFE6F] text-[#1A2A4D] py-2 rounded-md font-medium hover:bg-[#8CE167] transition"
+                    className="flex items-center justify-center w-full bg-[#3783D5] text-[#1A2A4D] py-2 rounded-md font-medium hover:bg-[#2E5C97] transition"
                 >
                     Sign In <LogIn className="ml-2" size={18} />
                 </Button>
@@ -104,7 +104,7 @@ function Login() {
                 Don&apos;t have an account?{" "}
                 <Link
                     to="/register"
-                    className="font-medium text-[#9FFE6F] hover:underline"
+                    className="font-medium text-[#3783D5] hover:underline"
                 >
                     Register
                 </Link>

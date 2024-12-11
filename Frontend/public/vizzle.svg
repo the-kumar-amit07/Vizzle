@@ -1,5 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="192" height="192">
-    <rect width="100%" height="100%" fill="transparent"/>
-    <rect width="161.033" height="174.02" x="-80.516" y="-87.01" fill="none" rx="0" ry="0" transform="translate(96.5 96.1)"/>
-    <path fill="#a0ff70" d="M28.58 23.89H83.1l18.72 37.68 17.45-37.68h44.06L104.3 143.83q-.9 1.73-2.82 2.71-1.92.97-3.95.97-2.1 0-3.94-.9-1.85-.9-2.82-2.78z"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="192" height="192" viewBox="0 0 192 192" xml:space="preserve">
+    <desc>
+        Created with Fabric.js 5.4.0
+    </desc>
+    <defs/>
+    <rect x="0" y="0" width="100%" height="100%" fill="transparent"/>
+    <g transform="matrix(1 0 0 1 96.5 96.1)">
+        <g style="">
+            <g transform="matrix(1 0 0 1 0 0)">
+                <rect x="-80.51647373107748" y="-87.00999999999999" rx="0" ry="0" width="161.03294746215497" height="174.01999999999998" stroke="rgb(255,255,255)" stroke-opacity="0" stroke-width="1" stroke-dasharray="none" stroke-linecap="butt" stroke-dashoffset="0" stroke-linejoin="miter" stroke-miterlimit="4" fill="rgb(255,255,255)" fill-opacity="0" fill-rule="nonzero" opacity="1"/>
+            </g>
+            <g transform="matrix(1 0 0 1 -0.55 -10.4)">
+                <path paint-order="stroke" transform=" translate(-95.95, -85.7)" d="M 28.58 23.89 L 83.1 23.89 L 101.82 61.57 L 119.27 23.89 L 163.33 23.89 L 104.3 143.83 Q 103.4 145.56 101.48 146.54 Q 99.56 147.51 97.53 147.51 L 97.53 147.51 Q 95.43 147.51 93.59 146.61 Q 91.74 145.71 90.77 143.83 L 90.77 143.83 L 28.58 23.89 Z" stroke-linecap="butt" stroke="rgb(255,255,255)" stroke-width="0" stroke-dasharray="none" stroke-dashoffset="0" stroke-linejoin="miter" stroke-miterlimit="4" fill="rgb(56,134,206)" fill-rule="nonzero" opacity="1"/>
+            </g>
+        </g>
+    </g>
 </svg>

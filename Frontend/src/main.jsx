@@ -4,7 +4,8 @@ import './index.css'
 import { Provider } from 'react-redux'
 import store from './store/store.js'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
-import {HomePage, SignUpPage, SignInPage} from './pages'
+import {HomePage, SignUpPage, SignInPage,VideoUploadPage } from './pages'
+
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <SignInPage/>
+      },
+      {
+        path: "upload",
+        element:<VideoUploadPage/>
       }
     ]
   }

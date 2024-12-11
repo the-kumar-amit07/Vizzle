@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary'
-import fs from "fs"
+import fs from "fs/promises"
 
     // Configuration
     cloudinary.config({
@@ -8,7 +8,7 @@ import fs from "fs"
         api_secret: process.env.CLOUDINARY_API_SECRET 
     })
 
-const uploadOnCloudinary = async (localFilePath) => {
+{/*const uploadOnCloudinary = async (localFilePath) => {
         try {
             if (!localFilePath) return null;
             const response = await cloudinary.uploader.upload(localFilePath, {
@@ -43,6 +43,65 @@ const extractPublicIdFromUrl = (url) => {
     const match = url.match(regex);
     return match ? match[1] : null;
 };
+*/}
+
+//--->Optimize way 
+
+const deleteLocalFile = async (filePath) => {
+    try { 
+        if (filePath) {
+            await fs.unlink(filePath)
+            console.log("File deleted from local storage:", filePath);
+        }
+    }
+    catch (error) {
+        console.error(`Error deleting local file: ${filePath}`, error.message);
+    }
+}
+
+const uploadOnCloudinary = async (localFilePath) => {
+    if (!localFilePath) return null;
+    try {
+        const response = await cloudinary.uploader.upload(localFilePath, {
+            resource_type: "auto",
+        });
+        console.log("Uploaded to Cloudinary:", response.secure_url);
+        return response;
+    } catch (error) {
+        console.error("Error uploading file to Cloudinary:", error.message);
+        return null;
+    } finally {
+        await deleteLocalFile(localFilePath);
+    }
+}
+
+const deleteFromCloudinary = async (publicId) => {
+    if (!publicId) return null;
+    try {
+        const response = await cloudinary.uploader.destroy(publicId);
+        console.log(`Deleted from Cloudinary: Public ID ${publicId}`, response);
+        return response;
+    } catch (error) {
+        console.error("Error deleting file from Cloudinary:", error.message);
+        return null;
+    }
+}
+
+const extractPublicIdFromUrl = (url) => {
+    if (!url) return null;
+
+    const regex = /\/v\d+\/([^/.]+)\.[a-z]+$/; // Matches the public_id in Cloudinary URLs
+    const match = url.match(regex);
+
+    if (match) {
+        console.log(`Extracted public ID: ${match[1]} from URL: ${url}`);
+        return match[1];
+    }
+
+    console.warn("No public ID found in URL:", url);
+    return null;
+};
+
 
 export {
     uploadOnCloudinary,

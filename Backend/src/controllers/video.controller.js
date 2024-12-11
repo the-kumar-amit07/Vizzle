@@ -7,10 +7,10 @@ import mongoose from "mongoose";
 
 //--->uploadVideo
 const uploadVideo = asyncHandler(async (req,res) => {
-    const { title, description, isPublished, duration } = req.body;
-    // console.log("req.body",req.body);
+    const { title, description,category } = req.body;  //if need ad duration
+    // console.log("req.body",req.body); 
     
-    if ([title, description, duration].some((field) => field?.trim() === "")) {
+    if ([title,category, description].some((field) => field?.trim() === "")) {  //if need ad duration
         throw new ApiErrors.Error(400,"Title, description, and duration are required!");
     }
     const videoFilePath = req.files?.videoFile[0]?.path;
@@ -31,8 +31,9 @@ const uploadVideo = asyncHandler(async (req,res) => {
         thumbnail:thumbnail.url,
         title,
         description,
-        duration,
-        isPublished : isPublished || true,
+        category,
+        // duration,
+        // isPublished : isPublished || true,
         owner : req.user._id,
         
     })

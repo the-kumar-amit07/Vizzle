@@ -7,7 +7,7 @@ function Input({label,type = "text",className = "",...props},ref) {
     return (
     label && (
             <label htmlFor= {id}
-            className="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-[#A3FB73] focus-within:ring-1 focus-within:ring-[#A3FB73]"
+            className="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-[#3783D5] focus-within:ring-1 focus-within:ring-[#3783D5]"
     >
         <input
         type={type}

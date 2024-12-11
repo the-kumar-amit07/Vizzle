@@ -12,16 +12,17 @@ export class VideoService {
         })
     }
 
-    async  uploadVideo({title,description,isPublished,duration,videoFile,thumbnail}) {
+    async  uploadVideo({title,description,category,videoFile,thumbnail}) {  //if need ad duration isPublished
         try {
             const formData = new FormData();
             formData.append("title", title);
             formData.append("description", description);
-            formData.append("isPublished", isPublished);
-            formData.append("duration", duration);
-            formData.append("videoFile", videoFile);
-            formData.append("thumbnail", thumbnail);
-            const response = await this.apiClient.post("/videos", formData, {
+            // formData.append("isPublished", isPublished);
+            formData.append("category", category);
+            // formData.append("duration", duration);
+            formData.append("videoFile", videoFile[0]);
+            formData.append("thumbnail", thumbnail[0]);
+            const response = await this.apiClient.post("/api/v1/videos/upload", formData, {
                 headers: {"Content-Type":"multipart/form-data"},
             })
             return response.data;
@@ -34,7 +35,7 @@ export class VideoService {
     async getAllVideos({ page = 1, limit = 10,query = '', sortBy = 'createdAt',sortType = 'desc',category ,userId }) {
         try {
             const params = { page, limit, query, sortBy, sortType, category ,userId }
-            const response = await this.apiClient.get('/', { params })
+            const response = await this.apiClient.get('/api/v1/videos/', { params })
             return response.data;
         } catch (error) {
             console.error(`VideoService::getAllVideos::error::${error}`);
@@ -42,9 +43,22 @@ export class VideoService {
         }
     }
 
+    async getRecentVideo({ limit = 10 }) {
+        try {
+            const params = { sortBy: "createdAt", sortType: "desc", limit }
+            const response = await this.apiClient.get('/api/v1/videos/', { params })
+            console.log("video response: ",response);
+            return response.data.data.video;
+        }
+        catch (error) {
+            console.error(`VideoService::getRecentVideo::error::${error}`);
+            throw error.response?.data || error;
+        }
+    }
+
     async getVideoById(id) {
         try {
-            const response = await this.apiClient.get(`/videos/${id}`) 
+            const response = await this.apiClient.get(`/api/v1/videos/v/:${id}`) 
             return response.data;
         }
         catch (error) {
@@ -55,7 +69,7 @@ export class VideoService {
 
     async updateVideo(id,{title,description}) {
         try { 
-            const response = await this.apiClient.put(`/videos/${title, description}`)
+            const response = await this.apiClient.put(`/api/v1/videos/v/:${id,title, description}`)
             return response.data;
         }
         catch (error) {
@@ -66,7 +80,7 @@ export class VideoService {
 
     async deleteVideo(id) {
         try {
-            const response = await this.apiClient.delete(`/video/${id}`)
+            const response = await this.apiClient.delete(`/api/v1/videos/v/:${id}`)
             return response.data;
         } catch (error) {
             console.error(`VideoService::deleteVideo::error::${error}`);

@@ -26,8 +26,8 @@ export class UserService {
             formData.append("email", email);
             formData.append("userName", userName);
             formData.append("password", password);
-            if (avatar) formData.append("avatar", avatar[0]);
-            if (coverImage) formData.append("coverImage", coverImage[0]);
+            formData.append("avatar", avatar[0]);
+            formData.append("coverImage", coverImage[0]);
 
             const response = await this.apiClient.post("/api/v1/users/register", formData,
                 {
@@ -52,6 +52,8 @@ export class UserService {
         try { 
             const userData = { userName, email, password };
             const response = await this.apiClient.post("/api/v1/users/login", userData)
+            console.log("response:",response);
+            console.log("response.data:",response.data);
             return response.data;
         }
         catch (error) {

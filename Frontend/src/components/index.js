@@ -4,6 +4,9 @@ import Avatar from "./Avatar";
 import Registration from "./Registration";
 import Button from "./Button";
 import Login from "./Login";
+import FileInput from "./FileInput";
+import Toggle from "./Toggle";
+import VideoUpload from "./VideoUpload";
 
 export {
     Navbar,
@@ -12,4 +15,7 @@ export {
     Registration,
     Button,
     Login,
+    FileInput,
+    Toggle,
+    VideoUpload
 }
