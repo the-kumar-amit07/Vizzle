@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { Input, FileInput, Button, Toggle } from "./index";
+import { FileInput, Button, Toggle, Input } from "./index";
 import videoService from "../services/video.api.js";
 import { addVideo } from "../store/video.slice.js";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,7 @@ function VideoUpload() {
         register,
         handleSubmit,
         formState: { errors },
+        setValue, // We use setValue to set files manually
     } = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -44,85 +45,80 @@ function VideoUpload() {
             console.error("Failed to upload. Please try again later.", error);
         });
     };
+
     return (
-        <section>
-        <div className="w-full max-w-md px-6 py-8 bg-[#24325E] border border-gray-200 rounded-lg shadow-md">
-            <div className="text-center">
-            <h2 className="text-3xl font-semibold text-gray-100">Upload Files</h2>
+        <section className="min-h-screen flex items-center justify-center bg-[#1A2A4D] px-4">
+        <div className="w-full max-w-lg bg-[#24325E] border border-gray-700 rounded-lg shadow-lg">
+            <div className="px-8 py-6 text-center border-b border-gray-700">
+            <h2 className="text-2xl font-semibold text-white">Upload Your Video</h2>
+            <p className="text-sm text-gray-400 mt-1">Provide all necessary details to upload your video</p>
             </div>
-            <form onSubmit={handleSubmit(upload)}>
+            <form onSubmit={handleSubmit(upload)} className="px-8 py-6 space-y-4">
             <Input
-                label="Enter Title"
+                label="Title"
+                placeholder="Enter Title"
                 className="bg-[#24325E]"
                 {...register("title", {
-                required: "title is required",
+                required: "Title is required",
                 })}
                 error={errors.title?.message}
             />
-
             <Input
-                label="Enter Description"
+                label="Description"
+                placeholder="Enter Description"
                 className="bg-[#24325E]"
                 {...register("description", {
-                required: "description is required",
+                required: "Description is required",
                 })}
                 error={errors.description?.message}
             />
             <Input
-                label="Enter Category"
+                label="Category"
+                placeholder="Enter Category"
                 className="bg-[#24325E]"
                 {...register("category", {
-                required: "category is required",
+                required: "Category is required",
                 })}
                 error={errors.category?.message}
             />
-{/* 
-            <Toggle
-                label="Status"
-                {...register("status", {
-                required: "status is required",
-                })}
-                error={errors.status?.message}
-            /> */}
-
             <FileInput
-                label="Click to Upload Video"
+                label="Video File"
                 type="file"
-                className="h-40"
                 {...register("videoFile", {
                 required: "Video File is required",
                 })}
+                onChange={(file) => setValue("videoFile", file)}
                 error={errors.videoFile?.message}
             />
             <FileInput
-                label="Click to Upload Thumbnail"
+                label="Thumbnail"
                 type="file"
-                className="h-40"
                 {...register("thumbnail", {
-                required: "Thumbnail File is required",
+                required: "Thumbnail is required",
                 })}
+                onChange={(file) => setValue("thumbnail", file)} 
                 error={errors.thumbnail?.message}
             />
             <Button
                 type="submit"
-                className="flex items-center justify-center w-full bg-[#3783D5] text-[#1A2A4D] py-2 rounded-md font-medium hover:bg-[#2E5C97] transition"
+                className="w-full flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
             >
                 Upload <Upload className="ml-2" size={18} />
             </Button>
             </form>
-            </div>
-            <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-        transition={Bounce}
+        </div>
+        <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+            transition={Bounce}
         />
         </section>
     );

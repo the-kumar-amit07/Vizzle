@@ -50,7 +50,7 @@ const extractPublicIdFromUrl = (url) => {
 const deleteLocalFile = async (filePath) => {
     try { 
         if (filePath) {
-            await fs.unlink(filePath)
+            await fs.unlink(filePath)    // because fs.unlinkSync is a synchronous method, meaning it blocks the event loop until the file deletion completes.
             console.log("File deleted from local storage:", filePath);
         }
     }
