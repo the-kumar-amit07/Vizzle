@@ -151,7 +151,7 @@ const getVideoById = asyncHandler(async (req,res) => {
 const updateVideo = asyncHandler(async (req, res) => {
     const { id } = req.params
     const { title, description } = req.body
-    
+
     const video = await Video.findByIdAndUpdate(
         id,
         {
