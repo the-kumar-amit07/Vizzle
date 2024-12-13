@@ -103,6 +103,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
                 category: 1,
                 "owner.userName": 1,
                 "owner.avatar": 1,
+                thumbnailPreview:"$thumbnail"
             },
         },
         {

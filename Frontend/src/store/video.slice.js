@@ -41,7 +41,7 @@ const videoSlice = createSlice({
         state.loading = false;
         state.videos = state.videos.filter(
             (video) => video._id !== action.payload._id
-        );
+            );
         },
         setError: (state, action) => {
         state.loading = false;

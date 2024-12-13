@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FileInput, Button, Toggle, Input } from "./index";
 import videoService from "../services/video.api.js";
 import { addVideo } from "../store/video.slice.js";
@@ -16,6 +16,7 @@ function VideoUpload() {
         handleSubmit,
         formState: { errors },
         setValue, // We use setValue to set files manually
+        watch
     } = useForm(
         {
         defaultValues: {
@@ -28,6 +29,22 @@ function VideoUpload() {
     );
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [videoFileName, setVideoFileName] = useState("No File Selected ");
+    const [thumbnailFileName, setThumbnailFileName] = useState("No File Selected ");
+    const vidFile = watch("videoFile")
+    const thumbnailFile = watch("thumbnail")
+
+    useEffect(() => {
+        if (vidFile && vidFile[0]) {
+            setVideoFileName(vidFile[0].name)
+        }
+    },[vidFile])
+    useEffect(() => {
+        if (thumbnailFile && thumbnailFile[0]) {
+            setThumbnailFileName(thumbnailFile[0].name)
+        }
+    },[thumbnailFile])
 
     const upload = async (data) => {
         console.log("Video data : ", data);
@@ -46,7 +63,7 @@ function VideoUpload() {
             if (session) {
             dispatch(addVideo(session.data));
             setTimeout(() => {
-                navigate("/videos");
+                navigate("/");
             }, 1000);
             }
         })
@@ -57,10 +74,10 @@ function VideoUpload() {
 
     return (
         <section className="min-h-screen flex items-center justify-center bg-[#040C2C] px-4">
-        <div className="w-full max-w-lg bg-[#24325E] border border-gray-700 rounded-lg shadow-lg">
+        <div className="w-full max-w-lg px-6 py-8 bg-[#24325E] border border-gray-700 rounded-lg shadow-lg">
             <div className="px-8 py-6 text-center border-b border-gray-700">
             <h2 className="text-2xl font-semibold text-white">Upload Your Video</h2>
-            <p className="text-sm text-gray-400 mt-1">Provide all necessary details to upload your video</p>
+            <p className="text-sm text-gray-400 mt-1">Enter all necessary details to upload your video</p>
             </div>
             <form onSubmit={handleSubmit(upload)} className="px-8 py-6 space-y-4">
             <Input
@@ -103,7 +120,7 @@ function VideoUpload() {
                 {...register("videoFile", {
                 required: "Video File is required",
                 })}
-                // onChange={(file) => setValue("videoFile", file)}
+                fileName = {videoFileName}
                 error={errors.videoFile?.message}
             />
             <FileInput
@@ -112,12 +129,12 @@ function VideoUpload() {
                 {...register("thumbnail", {
                 required: "Thumbnail is required",
                 })}
-                // onChange={(file) => setValue("thumbnail", file)} 
+                fileName = {thumbnailFileName}
                 error={errors.thumbnail?.message}
             />
             <Button
                 type="submit"
-                className="w-full flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                className="w-full flex items-center justify-center bg-[#3783D5] text-white py-2 px-4 rounded-md hover:bg-[#2E5C97] transition focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
             >
                 Upload <Upload className="ml-2" size={18} />
             </Button>

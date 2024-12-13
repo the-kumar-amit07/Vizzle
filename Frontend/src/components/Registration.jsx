@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { LogIn, ArrowRightToLine } from "lucide-react";
@@ -16,11 +16,26 @@ function Registration() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
 
+  const [avatarName, setAvatarName] = useState("");
+  const [coverImageName, setCoverImageName] = useState("")
+  const avatarFile = watch("avatar");
+  const coverImageFile = watch("coverImage");
+  useEffect(() => {
+    if (avatarFile && avatarFile[0]) {
+      setAvatarName(avatarFile[0].name)
+    }
+  }, [avatarFile])
+  useEffect(() => {
+    if (coverImageFile && coverImageFile[0]) {
+      setCoverImageName(coverImageFile[0].name)
+    }
+  },[coverImageFile])
   const onNext = (data) => {
     setFormData({ ...formData, ...data });
     setStep(2);
@@ -68,8 +83,8 @@ function Registration() {
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-[#040C2C]">
-      <div className="w-full max-w-md px-6 py-8 bg-[#24325E] border border-gray-200 rounded-lg shadow-md">
-        <div className="text-center">
+      <div className="w-full max-w-lg px-6 py-8 bg-[#24325E] border border-gray-200 rounded-lg shadow-md">
+        <div className="px-8 py-6 text-center border-b border-gray-700">
           <h2 className="text-3xl font-semibold text-gray-100">
             {step === 1 ? "Create Your Account" : "Set Up Your Profile"}
           </h2>
@@ -82,7 +97,7 @@ function Registration() {
           onSubmit={
             step === 1 ? handleSubmit(onNext) : handleSubmit(onSubmit)
           }
-          className="mt-6 space-y-6"
+          className="mt-6 px-8 py-6 space-y-6"
         >
           {step === 1 && (
             <>
@@ -153,21 +168,21 @@ function Registration() {
               /> */}
 
               <FileInput
-                label="Click to upload Profile Picture"
+                label="Profile Picture"
                 type="file"
-                className="h-40"
                 {...register("avatar", {
                   required: "Profile picture is required",
                 })}
+                fileName = {avatarName}
                 error={errors.avatar?.message}
               />
               <FileInput
-                label="Click to upload Cover Image"
+                label="Cover Image"
                 type="file"
-                className="h-24"
                 {...register("coverImage", {
                   required: "Cover image is required",
                 })}
+                fileName={coverImageName}
                 error={errors.avatar?.message}
               />
 
