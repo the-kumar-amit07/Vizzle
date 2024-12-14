@@ -4,7 +4,7 @@ import videoService from '../services/video.api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading, setRecentVideos } from '../store/video.slice'
 import { ChevronRight,ChevronLeft } from 'lucide-react';
-
+const screenWidth = window.innerWidth
 
 function Slider() {
 
@@ -26,10 +26,10 @@ function Slider() {
     }, [dispatch])
 
     const slideRight = (el) => {
-        el.scrollLeft+=800
+        el.scrollLeft+=screenWidth-110
     }
     const slideLeft = (el) => {
-        el.scrollLeft-=800
+        el.scrollLeft-=screenWidth-110
     }
 
     if(loading) return <p>Loading recent videos...</p>;
