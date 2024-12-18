@@ -8,6 +8,7 @@ import FileInput from "./FileInput";
 import Toggle from "./Toggle";
 import VideoUpload from "./VideoUpload";
 import Slider from "./Slider";
+import VideoPlayer from "./videoPlayer";
 
 export {
     Navbar,
@@ -20,4 +21,5 @@ export {
     Toggle,
     VideoUpload,
     Slider,
+    VideoPlayer,
 }

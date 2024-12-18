@@ -133,12 +133,45 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
 //--->getVideoById
 const getVideoById = asyncHandler(async (req,res) => {
-    const { id } = req.params
-    if (!id?.trim()) {
+    const { videoId } = req.params
+    if (!videoId?.trim()) {
         throw new ApiErrors(400, "Video ID is required.");
     }
 
-    const video = await Video.findById(id).populate("owner userName avatar")
+    // const video = await Video.findById(videoId).populate("owner userName avatar")
+    const video = await Video.aggregate([
+        {
+            $match: { _id : new mongoose.Types.ObjectId(videoId)}
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "owner",
+                foreignField: "_id",
+                as: "owner",
+            }
+        },
+        { $unwind: "$owner" },
+        {
+            $addFields: {
+                avatar: "$owner.avatar",
+                ownerName: "$owner.userName",
+                ownerFullName: "$owner.fullName",
+            }
+        },
+        {
+            $project: {
+                videoFile: 1,
+                thumbnail: 1,
+                title: 1,
+                description: 1,
+                createdAt: 1,
+                ownerName: 1,
+                ownerFullName: 1,
+                avatar:1
+            }
+        }
+    ])
     if (!video) {
         throw new ApiErrors(404, "Video not found.");
     }
@@ -150,11 +183,11 @@ const getVideoById = asyncHandler(async (req,res) => {
 
 //--->updateVideo
 const updateVideo = asyncHandler(async (req, res) => {
-    const { id } = req.params
+    const { videoId } = req.params
     const { title, description } = req.body
 
     const video = await Video.findByIdAndUpdate(
-        id,
+        videoId,
         {
             $set : {title,description}
         },
@@ -170,8 +203,8 @@ const updateVideo = asyncHandler(async (req, res) => {
 
 //--->deleteVideo
 const deleteVideo = asyncHandler(async (req,res) => {
-    const { id } = req.params
-    const video = await Video.findById(id)
+    const { videoId } = req.params
+    const video = await Video.findById(videoId)
     if (!video) {
         throw new ApiErrors(404, "Video not found!");
     }

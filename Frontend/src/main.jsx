@@ -4,7 +4,9 @@ import './index.css'
 import { Provider } from 'react-redux'
 import store from './store/store.js'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
-import {HomePage, SignUpPage, SignInPage,VideoUploadPage } from './pages'
+import { HomePage, SignUpPage, SignInPage, VideoUploadPage } from './pages'
+import {VideoPlayer} from './components'
+
 
 
 const router = createBrowserRouter([
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "upload",
         element:<VideoUploadPage/>
+      },
+      {
+        path: "/videos/v/:videoId",
+        element: <VideoPlayer/>
       }
     ]
   }

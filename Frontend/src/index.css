@@ -23,3 +23,12 @@ body {
     min-height: 100vh;
     
     }
+
+    /* Hide scrollbar for all elements */
+* {
+    scrollbar-width: none; /* For Firefox */
+    }
+
+  *::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Edge */
+    }

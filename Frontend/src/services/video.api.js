@@ -58,8 +58,9 @@ export class VideoService {
 
     async getVideoById(id) {
         try {
-            const response = await this.apiClient.get(`/api/v1/videos/v/:${id}`) 
-            return response.data;
+            const response = await this.apiClient.get(`/api/v1/videos/v/${id}`) 
+            console.log("getVideoById response: ",response);
+            return response.data.data[0];
         }
         catch (error) {
             console.error(`VideoService::getVideoById::error::${error}`);
@@ -69,7 +70,7 @@ export class VideoService {
 
     async updateVideo(id,{title,description}) {
         try { 
-            const response = await this.apiClient.put(`/api/v1/videos/v/:${id,title, description}`)
+            const response = await this.apiClient.put(`/api/v1/videos/v/${id,title, description}`)
             return response.data;
         }
         catch (error) {
@@ -80,7 +81,7 @@ export class VideoService {
 
     async deleteVideo(id) {
         try {
-            const response = await this.apiClient.delete(`/api/v1/videos/v/:${id}`)
+            const response = await this.apiClient.delete(`/api/v1/videos/v/${id}`)
             return response.data;
         } catch (error) {
             console.error(`VideoService::deleteVideo::error::${error}`);
