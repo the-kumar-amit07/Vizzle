@@ -9,6 +9,7 @@ import Toggle from "./Toggle";
 import VideoUpload from "./VideoUpload";
 import Slider from "./Slider";
 import VideoPlayer from "./videoPlayer";
+import ProductionCompany from "./ProductionCompany";
 
 export {
     Navbar,
@@ -22,4 +23,5 @@ export {
     VideoUpload,
     Slider,
     VideoPlayer,
+    ProductionCompany,
 }

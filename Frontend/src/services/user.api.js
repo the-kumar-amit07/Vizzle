@@ -150,6 +150,19 @@ export class UserService {
         }
     }
 
+    
+    async searchByUser(searchQuery) {
+        try { 
+            const params = { searchQuery }
+            const response = await this.apiClient.get('/api/v1/users/search', { params })
+            return response.data.data;
+        }
+        catch (error) {
+            console.error(`UserService::searchByUser::error::${error}`);
+            throw error.response?.data || error;
+        }
+    }
+
     async getWatchHistory() {
         try { 
             const response = await this.apiClient.get("/api/v1/users/history");

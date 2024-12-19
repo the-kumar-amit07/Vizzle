@@ -419,6 +419,49 @@ const getWatchHistory = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200,user[0].watchHistory,"Watch History"))
 })
 
+//searchedByUser
+const searchedByUser = asyncHandler(async (req, res) => {
+    const { query } = req.query
+    if (!query?.trim()) {
+        throw new ApiErrors("Search query is required!");
+    }
+
+    const user = await User.aggregate([
+        {
+            $match: {
+                userName: {$regex:query,$options:"i"}
+            }
+        },
+        {
+            $lookup: {
+                from: "subscriptions",
+                localField: "_id",
+                foreignField: "channel",
+                as:"subscribers",
+            }
+        },
+        {
+            $addFields: {
+                subscriberCount: { $size:"$subscribers"}
+            }
+        },
+        {
+            $project: {
+                fullName: 1,
+                userName: 1,
+                avatar: 1,
+                subscriberCount: 1,
+            }
+        }
+    ])
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200, user, "Users retrieved successfully!"));
+
+})
+    
+
 export {
     registerUser,
     logInUser,
@@ -430,5 +473,6 @@ export {
     updateAvatar,
     updateCoverImage,
     getChannel,
-    getWatchHistory
+    getWatchHistory,
+    searchedByUser
 }
