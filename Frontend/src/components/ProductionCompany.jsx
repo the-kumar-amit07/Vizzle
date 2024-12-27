@@ -37,7 +37,7 @@ function ProductionCompany() {
     return (
         <div  className='flex gap-2 md:gap-5 p-2 px-5 md:px-16 ' >
             {companyList.map((company) => (
-                <div key={company.id} className='relative border-[2px] border-gray-700 rounded-lg hover:scale-110 transition-all duration-300 ease-in-out cursor-pointer shadow-lg shadow-indigo-700'>
+                <div key={company.id} className='relative border-[2px] border-gray-700 rounded-lg hover:scale-110 transition-all duration-300 ease-in-out cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-indigo-600 shadow-indigo-700'>
                     <video src={company.video} autoPlay loop playsInline muted   className='absolute object-cover  w-full h-full z-0 top-0 rounded-md opacity-0 hover:opacity-100' />
                     <img src={company.image} className=' w-full h-full z-[1] opacity-100' />
                 </div>
