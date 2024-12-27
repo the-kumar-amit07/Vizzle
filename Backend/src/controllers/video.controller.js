@@ -4,6 +4,22 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Video } from "../models/video.model.js";
 import { deleteFromCloudinary, extractPublicIdFromUrl, uploadOnCloudinary } from "../utils/cloudinary.js";
 import mongoose from "mongoose";
+// import { Category } from "../models/category.model.js";
+
+// const getOrCreateCategory = async (category) => {
+//     try {
+//         let categoryName = await Category.findOne({ category: category });
+//         if (!categoryName) {
+//             categoryName = await Category.create({
+//                 category: category,
+//                 // thumbnail: thumbnail
+//             });
+//         }
+//         return categoryName;
+//     } catch (error) {
+//         throw new ApiErrors(500,"Something went wrong while get Or Creating a Category!");
+//     }
+// }
 
 //--->uploadVideo
 const uploadVideo = asyncHandler(async (req,res) => {
@@ -11,27 +27,34 @@ const uploadVideo = asyncHandler(async (req,res) => {
     // console.log("req.body",req.body); 
     
     if ([title,category, description].some((field) => field?.trim() === "")) {  //if need ad duration
-        throw new ApiErrors.Error(400,"Title, description, and duration are required!");
+        throw new ApiErrors.Error(400,"Title, description, and category are required!");
     }
     const videoFilePath = req.files?.videoFile[0]?.path;
     const thumbnailFilePath = req.files?.thumbnail[0]?.path;
-    if (!videoFilePath || !thumbnailFilePath) {
-        throw new ApiErrors.Error(400,"Video file and thumbnail are required!")
+    const posterFilePath = req.files?.poster[0]?.path;
+    if (!videoFilePath || !thumbnailFilePath || !posterFilePath) {
+        throw new ApiErrors.Error(400,"Video file, thumbnail and poster are required!")
     }
     const videoFile = await uploadOnCloudinary(videoFilePath)
     const thumbnail = await uploadOnCloudinary(thumbnailFilePath)
+    const poster = await uploadOnCloudinary(posterFilePath)
 
     // console.log("video file path::",videoFilePath);
 
-    if (!videoFile?.url || !thumbnail?.url) {
+    if (!videoFile?.url || !thumbnail?.url || !poster?.url) {
         throw new ApiErrors.Error(500, "Failed to upload video or thumbnail!")
     }
+
+    // const categoryDoc = await getOrCreateCategory(category)
+
+
     const video = await Video.create({
         videoFile:videoFile.url,
-        thumbnail:thumbnail.url,
+        thumbnail: thumbnail.url,
+        poster: poster.url,
         title,
         description,
-        category,
+        category: category, //categoryDoc._id
         // duration,
         isPublished : isPublished || true,
         owner : req.user._id,
@@ -98,6 +121,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
                 views: 1,
                 videoFile:1,
                 thumbnail: 1,
+                poster: 1,
                 duration: 1,
                 createdAt: 1,
                 category: 1,
@@ -163,6 +187,7 @@ const getVideoById = asyncHandler(async (req,res) => {
             $project: {
                 videoFile: 1,
                 thumbnail: 1,
+                poster: 1,
                 title: 1,
                 description: 1,
                 createdAt: 1,
@@ -205,11 +230,16 @@ const updateVideo = asyncHandler(async (req, res) => {
 const deleteVideo = asyncHandler(async (req,res) => {
     const { videoId } = req.params
     const video = await Video.findById(videoId)
+    // console.log("video",video);
+    
     if (!video) {
         throw new ApiErrors(404, "Video not found!");
     }
-    if (video.url) {
-        const publicId = await extractPublicIdFromUrl(video.url)
+    if (video) {
+        // console.log("video url",video);
+        
+        const publicId = await extractPublicIdFromUrl(video.videoFile)
+        // console.log("publicId",publicId);
         if (publicId) {
             await deleteFromCloudinary(publicId) //if  not work then put this { resource_type: "video" }
         }

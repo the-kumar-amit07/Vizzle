@@ -32,8 +32,10 @@ function VideoUpload() {
 
     const [videoFileName, setVideoFileName] = useState("No File Selected ");
     const [thumbnailFileName, setThumbnailFileName] = useState("No File Selected ");
+    const [posterFileName,setPosterFileName] = useState("No File Selected");
     const vidFile = watch("videoFile")
     const thumbnailFile = watch("thumbnail")
+    const posterFile = watch("poster")
 
     useEffect(() => {
         if (vidFile && vidFile[0]) {
@@ -44,7 +46,12 @@ function VideoUpload() {
         if (thumbnailFile && thumbnailFile[0]) {
             setThumbnailFileName(thumbnailFile[0].name)
         }
-    },[thumbnailFile])
+    }, [thumbnailFile])
+    useEffect(() => {
+        if (posterFile && posterFile[0]) {
+            setPosterFileName(posterFile[0].name)
+        }
+    },[posterFile])
 
     const upload = async (data) => {
         console.log("Video data : ", data);
@@ -131,6 +138,15 @@ function VideoUpload() {
                 })}
                 fileName = {thumbnailFileName}
                 error={errors.thumbnail?.message}
+            />
+            <FileInput
+                label="Poster"
+                type="file"
+                {...register("poster", {
+                    required: "Poster is required",
+                })}
+                fileName={posterFileName}
+                error={errors.poster?.message}
             />
             <Button
                 type="submit"

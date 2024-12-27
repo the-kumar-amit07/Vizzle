@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { ProductionCompany, Slider } from '../components'
+import { ProductionCompany, Slider, VideoByCategory } from '../components'
 
 function HomePage() {
   return (
     <div>
       <Slider />
-      <ProductionCompany/>
+      <ProductionCompany />
+      <VideoByCategory/>
     </div>
   )
 }

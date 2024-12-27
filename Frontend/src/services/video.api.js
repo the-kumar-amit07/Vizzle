@@ -12,7 +12,7 @@ export class VideoService {
         })
     }
 
-    async uploadVideo({title,description,category,isPublished,videoFile,thumbnail}) {  //if need ad duration 
+    async uploadVideo({title,description,category,isPublished,videoFile,thumbnail,poster}) {  //if need ad duration 
         try {
             const formData = new FormData();
             formData.append("title", title);
@@ -22,6 +22,7 @@ export class VideoService {
             // formData.append("duration", duration);
             formData.append("videoFile", videoFile[0]);
             formData.append("thumbnail", thumbnail[0]);
+            formData.append("poster",poster[0])
             const response = await this.apiClient.post("/api/v1/videos/upload", formData, {
                 headers: {"Content-Type":"multipart/form-data"},
             })
@@ -36,6 +37,7 @@ export class VideoService {
         try {
             const params = { page, limit, query, sortBy, sortType, category ,userId }
             const response = await this.apiClient.get('/api/v1/videos/', { params })
+            console.log("video response: ",response);
             return response.data;
         } catch (error) {
             console.error(`VideoService::getAllVideos::error::${error}`);
@@ -47,7 +49,7 @@ export class VideoService {
         try {
             const params = { sortBy: "createdAt", sortType: "desc", limit }
             const response = await this.apiClient.get('/api/v1/videos/', { params })
-            console.log("video response: ",response);
+            // console.log("video response: ",response);
             return response.data.data.video;
         }
         catch (error) {
@@ -59,7 +61,7 @@ export class VideoService {
     async getVideoById(id) {
         try {
             const response = await this.apiClient.get(`/api/v1/videos/v/${id}`) 
-            console.log("getVideoById response: ",response);
+            // console.log("getVideoById response: ",response);
             return response.data.data[0];
         }
         catch (error) {

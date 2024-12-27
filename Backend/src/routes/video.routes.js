@@ -14,6 +14,10 @@ router.route("/upload").post(
         {
             name: "thumbnail",
             maxCount: 1,
+        },
+        {
+            name: "poster",
+            maxCount:1,
         }
     ]),varifyJWT, uploadVideo);
 

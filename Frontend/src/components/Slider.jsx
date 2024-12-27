@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from 'react'
 import videoService from '../services/video.api'
@@ -19,7 +20,7 @@ function Slider() {
         const fetchVideos = async () => {
             dispatch(setLoading())
             try { 
-                const videos = await videoService.getRecentVideo({ limit: 10 })
+                const videos = await videoService.getRecentVideo({ limit: 5 })
                 // console.log("videos:",videos);
                 dispatch(setRecentVideos(videos))
             } catch (error) {
@@ -40,11 +41,11 @@ function Slider() {
 
     return (
         <div>
-            <ChevronLeft onClick={()=>slideLeft(cardRef.current)}  className='hidden md:block text-white text-[30px] absolute mx-8 mt-[150px] cursor-pointer '/>
-            <ChevronRight onClick={()=>slideRight(cardRef.current)}  className='hidden md:block text-white text-[30px] absolute mx-8 mt-[150px] cursor-pointer right-0'/>
+            <ChevronLeft onClick={()=>slideLeft(cardRef.current)}  className='hidden md:block text-white text-[30px] absolute mx-8 mt-[240px] cursor-pointer '/>
+            <ChevronRight onClick={()=>slideRight(cardRef.current)}  className='hidden md:block text-white text-[30px] absolute mx-8 mt-[240px] cursor-pointer right-0'/>
             <div ref={cardRef} className='flex overflow-x-auto w-full px-16 py-4 scrollbar-none scroll-smooth'>
             {recentVideos.map((video) => (
-                    <img key={video._id} onClick={()=>{navigate(`/videos/v/${video._id}`)}}  src={video.thumbnail} alt={video.title} className='md:h-[310px] min-w-full mr-5 object-cover object-left-top rounded-md hover:border-[4px] border-[#3783D5] transition-all duration-100 ease-in-out' /> 
+                    <img key={video._id} onClick={()=>{navigate(`/videos/v/${video._id}`)}}  src={video.thumbnail} alt={video.title} className='md:h-[450px] min-w-full mr-5 object-center rounded-md hover:border-[4px] border-[#3783D5] transition-all duration-100 ease-in-out' /> 
             ))}
         </div>
         </div>

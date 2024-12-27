@@ -10,7 +10,10 @@ import VideoUpload from "./VideoUpload";
 import Slider from "./Slider";
 import VideoPlayer from "./videoPlayer";
 import ProductionCompany from "./ProductionCompany";
-
+import VideoByCategory from "./VideoByCategory";
+import CategoryList from "./CategoryList";
+import VideoCard from "./VideoCard";
+import VerticalCard from "./VerticalCard";
 export {
     Navbar,
     Input,
@@ -24,4 +27,8 @@ export {
     Slider,
     VideoPlayer,
     ProductionCompany,
+    VideoByCategory,
+    VideoCard,
+    CategoryList,
+    VerticalCard,
 }

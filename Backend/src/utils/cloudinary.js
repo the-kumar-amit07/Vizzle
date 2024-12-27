@@ -90,7 +90,8 @@ const deleteFromCloudinary = async (publicId) => {
 const extractPublicIdFromUrl = (url) => {
     if (!url) return null;
 
-    const regex = /\/v\d+\/([^/.]+)\.[a-z]+$/; // Matches the public_id in Cloudinary URLs
+    // regex to support all file extensions
+    const regex = /\/(?:v\d+\/)?([^/.]+)\.[a-zA-Z0-9]+$/;
     const match = url.match(regex);
 
     if (match) {
@@ -101,6 +102,7 @@ const extractPublicIdFromUrl = (url) => {
     console.warn("No public ID found in URL:", url);
     return null;
 };
+
 
 
 export {

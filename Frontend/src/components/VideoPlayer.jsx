@@ -160,7 +160,7 @@ return (
                 max="100"
                 value={(currentTime / duration) * 100 || 0}
                 onChange={handleSeek}
-                className="flex-grow mx-4 appearance-none h-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-all"
+                className="flex-grow mx-4 appearance-none h-2 bg-gray-700 rounded-lg hover:bg-gray-600  transition-all"
                 />
                 <span className="text-sm">{formatTime(duration)}</span>
             </div>
