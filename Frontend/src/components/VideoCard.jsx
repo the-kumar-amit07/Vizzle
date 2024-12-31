@@ -4,15 +4,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function VideoCard({ video }) {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     return (
-        <section className="flex flex-col items-center">
-            <img
-                src={video.poster}
-                onClick={()=>{navigate(`/videos/v/${video._id}`)}}
-                alt={video.title}
-                className="w-[110px] md:w-[200px] rounded-lg hover:border-[3px] border-gray-300 cursor-pointer hover:scale-110 transition-all duration-150 ease-in"
-            />
+        <section className="flex flex-col items-center  hover:scale-110 transition-transform duration-150 ease-in-out w-full">
+            <div className="w-full h-[80px] md:h-[180px] rounded-lg overflow-hidden">
+                <img
+                    src={video.thumbnail}
+                    onClick={() => { navigate(`/videos/v/${video._id}`); }}
+                    alt={video.title}
+                    className="w-full h-full object-cover cursor-pointer"
+                />
+            </div>
         </section>
     );
 }

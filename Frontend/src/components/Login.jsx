@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { logIn as authLogIn } from "../store/auth.slice.js";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import store from '../store/store.js';
 
 function Login() {
     const {
@@ -19,30 +20,23 @@ function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const login = async (data) => {
-        // try {
-        //     const response = await userService.loginUser(data)
-        //     if (response) {
-        //         const currentUser = await userService.getCurrentUser()
-        //         if (currentUser) {
-        //             dispatch(authLogIn({ userData: currentUser.user }))
-        //             navigate("/")
-        //         }
-        //     }
-        // } catch (error) {
-        //     console.error("Registration failed. Please try again.", error);
-        // }
         toast.promise(userService.loginUser(data), {
             pending: "Logging in...",
             success: "Logged in successfully!",
             error: "Failed to login. Please check your credentials."
         }).then(async (session) => {
-            const currentUser = await userService.getCurrentUser()
-            if (currentUser) {
-                    dispatch(authLogIn({ userData: currentUser.user }))
-                        setTimeout(() => {
-                            navigate("/");
-                        }, 1000);
-                    }
+            if (session) {
+                const currentUser = await userService.getCurrentUser()
+                console.log("currentUser",currentUser.data);
+                if (currentUser) {
+                    dispatch(authLogIn(currentUser.data));
+                    console.log("User data after dispatch:", currentUser.data); 
+                    console.log("State after dispatch:", store.getState()); // Log store state
+                            setTimeout(() => {
+                                navigate("/");
+                            }, 1000);
+                        }
+            }
         }).catch ((error) => {
             console.error("Login failed. Please try again.", error);
         })

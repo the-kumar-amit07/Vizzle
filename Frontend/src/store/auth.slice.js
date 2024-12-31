@@ -10,13 +10,14 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logIn: (state, action) => {
+            console.log("logIn Reducer Fired with payload:", action.payload); // Log the payload
             state.status = true;
-            state.userData = action.payload.userData;
+            state.userData = action.payload;
         },
         LogOut: (state) => {
             state.status = false,
             state.userData = null;
-        }
+        },
     }
 })
 

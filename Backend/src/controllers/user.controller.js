@@ -111,7 +111,7 @@ const logInUser = asyncHandler(async (req,res) => {
         httpOnly: true,               // Prevent JavaScript access
         secure: false,                // Not using HTTPS in development
         sameSite: 'Lax',              // Allow some cross-origin requests for testing
-        maxAge: 3600000,              // 1 hour expiration
+        // maxAge: 3600000,              // 1 hour expiration
         path: '/',
     }
     //response to user
@@ -142,7 +142,7 @@ const logOutUser = asyncHandler(async (req, res) => {
         httpOnly: true,               // Prevent JavaScript access
         secure: false,                // Not using HTTPS in development
         sameSite: 'Lax',              // Allow some cross-origin requests for testing
-        maxAge: 3600000,              // 1 hour expiration
+        // maxAge: 3600000,              // 1 hour expiration
         path: '/',
     }
     //response to user
@@ -174,7 +174,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             httpOnly: true,               // Prevent JavaScript access
             secure: false,                // Not using HTTPS in development
             sameSite: 'Lax',              // Allow some cross-origin requests for testing
-            maxAge: 3600000,              // 1 hour expiration
+            // maxAge: 3600000,              // 1 hour expiration
             path: '/',
         }
         
@@ -421,7 +421,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
 
 //searchedByUser
 const searchedByUser = asyncHandler(async (req, res) => {
-    const { query } = req.query
+    const { query } = req.query;
     if (!query?.trim()) {
         throw new ApiErrors("Search query is required!");
     }
@@ -429,7 +429,7 @@ const searchedByUser = asyncHandler(async (req, res) => {
     const user = await User.aggregate([
         {
             $match: {
-                userName: {$regex:query,$options:"i"}
+                userName: { $regex: query, $options: "i" }
             }
         },
         {
@@ -437,12 +437,12 @@ const searchedByUser = asyncHandler(async (req, res) => {
                 from: "subscriptions",
                 localField: "_id",
                 foreignField: "channel",
-                as:"subscribers",
+                as: "subscribers",
             }
         },
         {
             $addFields: {
-                subscriberCount: { $size:"$subscribers"}
+                subscriberCount: { $size: "$subscribers" }
             }
         },
         {
@@ -450,16 +450,19 @@ const searchedByUser = asyncHandler(async (req, res) => {
                 fullName: 1,
                 userName: 1,
                 avatar: 1,
+                coverImage: 1,
                 subscriberCount: 1,
             }
         }
-    ])
+    ]);
 
-    return res
-    .status(200)
-    .json(new ApiResponse(200, user, "Users retrieved successfully!"));
+    if (!user.length) {
+        return res.status(200).json(new ApiResponse(200, [], "No users found"));
+    }
 
-})
+    return res.status(200).json(new ApiResponse(200, user, "Users retrieved successfully!"));
+});
+
     
 
 export {

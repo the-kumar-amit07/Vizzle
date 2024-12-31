@@ -69,7 +69,7 @@ function Registration() {
       if (session) {
         const currentUser = await userService.getCurrentUser();
         if (currentUser) {
-          dispatch(authLogIn({ userData: currentUser.user }))
+          dispatch(authLogIn(currentUser.data))
           setTimeout(() => {
             navigate("/");
           }, 1000);
