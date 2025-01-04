@@ -10,7 +10,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         logIn: (state, action) => {
-            console.log("logIn Reducer Fired with payload:", action.payload); // Log the payload
+            // console.log("logIn Reducer Fired with payload:", action.payload); // Log the payload
             state.status = true;
             state.userData = action.payload;
         },

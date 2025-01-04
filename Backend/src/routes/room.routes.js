@@ -1,12 +1,17 @@
 import { Router } from "express";
-import { varifyJWT } from "../middlewares/auth.middleware.js";
-import { createRoom, getInviteLink, getRoomInfo, joinRoom } from "../controllers/room.controller.js";
+import {
+    createRoom,
+    getInviteLink,
+    getRoomInfo,
+    joinRoom,
+} from "../controllers/room.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.route("/create-room").post(varifyJWT, createRoom);
-router.route("/join/:inviteToken").post(varifyJWT, joinRoom);
-router.route("/:roomId").get(varifyJWT, getRoomInfo)
-router.route("/:roomId/invite").get(varifyJWT, getInviteLink)
+router.route("/create-room").post(verifyJWT, createRoom);
+router.route("/join/:inviteToken").post(verifyJWT, joinRoom);
+router.route("/:roomId").get(verifyJWT, getRoomInfo);
+router.route("/:roomId/invite").get(verifyJWT, getInviteLink);
 
 export default router;

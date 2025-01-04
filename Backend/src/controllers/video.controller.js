@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Video } from "../models/video.model.js";
 import { deleteFromCloudinary, extractPublicIdFromUrl, uploadOnCloudinary } from "../utils/cloudinary.js";
 import mongoose from "mongoose";
+import { User } from "../models/user.model.js";
 // import { Category } from "../models/category.model.js";
 
 // const getOrCreateCategory = async (category) => {
@@ -250,6 +251,72 @@ const deleteVideo = asyncHandler(async (req,res) => {
         .json(new ApiResponse(200, null, "Video deleted successfully!"));
 })
 
+//--->addToWatchHistory
+const addToWatchHistory = asyncHandler(async (req, res) => {
+    const { videoId } = req.params
+    
+    if (!videoId ||!mongoose.Types.ObjectId.isValid(videoId)) {
+        throw new ApiErrors(400, "Invalid VideoId!")
+    }
+
+    const video = await Video.findById(videoId)
+    console.log("video in addToWatchHistory",video);
+    
+    if (!video) {
+        throw new ApiErrors(404, "Video not found!");
+    }
+
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $addToSet: {watchHistory:video._id}
+        },
+        {new:true}
+    ).select("watchHistory")
+
+    // const user = await User.updateOne(
+    //     {
+    //         _id:req.user._id,
+    //     },
+    //     [
+    //         {
+    //             $set: {
+    //                 watchHistory: {
+    //                     $let: {
+    //                         vars: {
+    //                             updatedHistory: {
+    //                                 $concatArrays: [
+    //                                     [video],
+    //                                     {
+    //                                         $filter: {
+    //                                             input: "$watchHistory",
+    //                                             as: "history",
+    //                                             cond:{$ne:["$$history.videoId",videoId]}
+    //                                         }
+    //                                     }
+    //                                 ]
+    //                             }
+    //                         },in:{$slice:["$$updatedHistory",50]}
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     ]
+    // )
+
+    
+    
+    // if (user.length === 0) {
+    //     throw new ApiErrors(404, "User not found!");
+    // }
+
+    // const updatedUser = await User.findById(req.user._id,"watchHistory")
+    // console.log("updatedUser",updatedUser);
+
+
+
+    return res.status(200).json(new ApiResponse(200, user.watchHistory, "Watch history updated successfully!"));
+})
 
 export {
     uploadVideo,
@@ -257,4 +324,5 @@ export {
     getVideoById,
     updateVideo,
     deleteVideo,
+    addToWatchHistory,
 }

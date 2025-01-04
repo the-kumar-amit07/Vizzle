@@ -35,7 +35,9 @@ function Registration() {
     if (coverImageFile && coverImageFile[0]) {
       setCoverImageName(coverImageFile[0].name)
     }
-  },[coverImageFile])
+  }, [coverImageFile])
+  
+  
   const onNext = (data) => {
     setFormData({ ...formData, ...data });
     setStep(2);
@@ -44,20 +46,6 @@ function Registration() {
   const onSubmit = async (data) => {
     const finalData = { ...formData, ...data };
     // console.log("Submitted Data:", finalData);
-
-    // try {
-    //   const response = await userService.registerUser(finalData);
-    //   if (response) {
-    //     console.log("registerUser response:", response);
-    //     const currentUser = await userService.getCurrentUser();
-    //     if (currentUser) {
-    //       dispatch(authLogIn({ userData: currentUser.user }));
-    //       navigate("/");
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.error("Registration failed. Please try again.", error);
-    // }
     toast.promise(
       userService.registerUser(finalData),
       {

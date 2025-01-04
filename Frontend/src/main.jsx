@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         element: <SignInPage/>
       },
       {
-        path: "upload",
+        path: "/upload",
         element:<VideoUploadPage/>
       },
       {
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         element: <VideoPlayer/>
       },
       {
-        path: "/current-user",
+        path: "/profile",
         element:<ProfilePage/>
       }
     ]

@@ -27,7 +27,7 @@ function CategoryList({ videos, indx }) {
             />
             <div
                 ref={videosRef}
-                className="flex overflow-x-auto gap-8 scrollbar-none scroll-smooth pt-4 md:px-8 pb-4"
+                className="flex overflow-x-auto gap-2 md:gap-8 scrollbar-none scroll-smooth pt-2 md:px-8 pb-4"
             >
                 {videos.map((video) => (
                     <div key={video._id}>

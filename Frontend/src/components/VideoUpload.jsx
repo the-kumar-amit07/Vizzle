@@ -54,9 +54,9 @@ function VideoUpload() {
     },[posterFile])
 
     const upload = async (data) => {
-        console.log("Video data : ", data);
-        console.log("Video file: ", data.videoFile);
-        console.log("Thumbnail file: ", data.thumbnail);
+        // console.log("Video data : ", data);
+        // console.log("Video file: ", data.videoFile);
+        // console.log("Thumbnail file: ", data.thumbnail);
 
         toast
         .promise(videoService.uploadVideo(data), {
@@ -65,7 +65,7 @@ function VideoUpload() {
             error: "Failed to upload. Please try again.",
         })
         .then(async (session) => {
-            console.log("Upload Session", session);
+            // console.log("Upload Session", session);
 
             if (session) {
             dispatch(addVideo(session.data));

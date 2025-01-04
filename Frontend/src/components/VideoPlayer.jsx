@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronsRight, ChevronsLeft, Pause, Play } from "lucide-react";
@@ -17,6 +18,8 @@ function VideoPlayer() {
     const navigate = useNavigate();
     const { currentVideo } = useSelector((state) => state.video);
 
+    console.log("VideoId",videoId);
+    
     // Fetch video details
     useEffect(() => {
         if (!videoId) return navigate("/");
@@ -25,12 +28,25 @@ function VideoPlayer() {
             try {
                 const video = await videoService.getVideoById(videoId);
                 dispatch(setCurrentVideos(video));
+                // addToWatchHistory(videoId)
             } catch (error) {
                 console.error("Error fetching video:", error);
             }
         };
         fetchVideo();
     }, [videoId, navigate, dispatch]);
+
+        const addToWatchHistory = async (videoId) => {
+            if (isPlaying) {
+                try {
+                    await videoService.addToWatchHistory(videoId);
+                    // console.log("Watch history updated!");
+                } catch (error) {
+                    console.error("Error updating watch history:", error);
+                }
+            }
+            
+        }
 
     // Handle scroll
     useEffect(() => {
@@ -84,7 +100,8 @@ function VideoPlayer() {
                     onLoadedMetadata={() => setDuration(videoRef.current.duration)}
                     onTimeUpdate={() => setCurrentTime(videoRef.current.currentTime)}
                     className="w-full h-full object-cover"
-                    autoPlay
+                    // autoPlay
+                    onPlay={() =>addToWatchHistory(videoId)}
                 />
                 {/* Video Controls */}
                 <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-transparent to-transparent">

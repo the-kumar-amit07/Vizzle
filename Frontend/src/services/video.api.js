@@ -90,6 +90,19 @@ export class VideoService {
             throw error.response?.data || error;
         }
     }
+
+    async addToWatchHistory(videoId) {
+        try {
+            const response = await this.apiClient.post(`/api/v1/videos/history/${ videoId }`)
+            console.log("addToWatchHistory",response.data);
+            
+            return response.data;
+            
+        } catch (error) {
+            console.error(`UserService::addToWatchHistory::error::${error}`);
+            throw error.response?.data || error;
+        }
+    }
 }
 
 

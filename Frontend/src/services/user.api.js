@@ -153,8 +153,8 @@ export class UserService {
     
     async searchByUser(searchQuery) {
         try { 
-            const params = { searchQuery }
-            const response = await this.apiClient.get('/api/v1/users/search', { params })
+            const query = { searchQuery }
+            const response = await this.apiClient.get('/api/v1/users/search', { query })
             return response.data.data;
         }
         catch (error) {
@@ -166,7 +166,9 @@ export class UserService {
     async getWatchHistory() {
         try { 
             const response = await this.apiClient.get("/api/v1/users/history");
-            return response.data;
+            console.log("getWatchHistory",response.data.data);
+            
+            return response.data.data;
         }
         catch (error) {
             console.error(`UserService::getWatchHistory::error::${error}`);

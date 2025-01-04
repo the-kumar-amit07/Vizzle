@@ -413,6 +413,13 @@ const getWatchHistory = asyncHandler(async (req, res) => {
             }
         }
     ])
+    
+    console.log("watchHistory",user[0].watchHistory);
+    
+
+    if (!user?.length) {
+        throw new ApiErrors(404,"user does not exist!");
+    }
 
     return res
         .status(200)

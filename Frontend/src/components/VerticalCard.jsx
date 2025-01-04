@@ -10,14 +10,13 @@ function VerticalCard({ video }) {
             <img
                 onClick={()=>{navigate(`/videos/v/${video._id}`)}}
                 src={video.poster}
-                alt={video.title}
-                className="w-[110px] md:w-[200px] rounded-lg hover:border-[3px] border-gray-400 cursor-pointer "
+                className="w-[110px] md:w-[200px] rounded-lg hover:border-[3px] border-[#3783D5] cursor-pointer "
             />
-            <h2
+            {/* <h2
                 className="w-[110px] md:w-[200px] text-center text-white mt-2 text-sm md:text-base font-semibold"
             >
                 {video.title}
-            </h2>
+            </h2> */}
         </section>
     );
 }

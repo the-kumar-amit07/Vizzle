@@ -16,7 +16,7 @@ function VideoByCategory() {
     const groupByCategory = (videos = []) => {
         return videos.reduce((acc, video) => {
             if (!video.category) {
-                console.error("Video without category:", video);
+                // console.error("Video without category:", video);
                 return acc; // Skip videos without a valid category
             }
             if (!acc[video.category]) {
@@ -48,16 +48,18 @@ function VideoByCategory() {
     
     if(loading) return <p>Loading recent videos...</p>;
     return (
-        <div className='mt-8'>
+        <section className='mt-4 md:mt-8 flex flex-col gap-4 md:gap-8'>
             {
                 Object.keys(Groups).map((category,index) => index<=4 && (
-                    <div key={category} className='p-4 px-8 md:px-16'>
-                        <h2 className='text-white text-[20px] font-bold'>{category}</h2>
-                        <CategoryList videos={Groups[category]} indx={index} />
-                    </div>
+                    <section key={category} className='flex flex-col' >  {/*  */}
+                        <h2 className='text-white text-[20px] font-bold px-2 md:px-16'>{category}</h2>
+                        <div className='px-2 md:px-8'>
+                        <CategoryList videos={Groups[category]} indx={index}/>
+                        </div>
+                    </section>
                 ))
             }
-        </div>
+        </section>
     )
 }
 

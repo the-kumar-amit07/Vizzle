@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
-import { varifyJWT } from "../middlewares/auth.middleware.js";
-import { deleteVideo, getAllVideos, getVideoById, updateVideo, uploadVideo } from "../controllers/video.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { addToWatchHistory, deleteVideo, getAllVideos, getVideoById, updateVideo, uploadVideo } from "../controllers/video.controller.js";
 
 const router = Router();
 
@@ -19,11 +19,12 @@ router.route("/upload").post(
             name: "poster",
             maxCount:1,
         }
-    ]),varifyJWT, uploadVideo);
+    ]),verifyJWT, uploadVideo);
 
 router.route("/v/:videoId").get(getVideoById)
 router.route("/").get(getAllVideos)
-router.route("/v/:videoId").put(varifyJWT,updateVideo)
-router.route("/v/:videoId").delete(varifyJWT,deleteVideo)
+router.route("/v/:videoId").put(verifyJWT,updateVideo)
+router.route("/v/:videoId").delete(verifyJWT, deleteVideo)
+router.route("/history/:videoId").post(verifyJWT,addToWatchHistory)
 
 export default router;

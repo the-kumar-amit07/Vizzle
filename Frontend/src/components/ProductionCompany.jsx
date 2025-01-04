@@ -31,16 +31,34 @@ function ProductionCompany() {
             image: "https://res.cloudinary.com/cloudinarysave/image/upload/v1735040495/Production%20Company/mhxy7fsmabm93vpsvprt.png",
             video: "https://res.cloudinary.com/cloudinarysave/video/upload/v1735040766/Production%20Company/videos/umgnobiremeh0uhoztjb.mp4",
         },
+        {
+            id: 6, //DreamWorks
+            image: "https://res.cloudinary.com/cloudinarysave/image/upload/v1735040495/Production%20Company/mhxy7fsmabm93vpsvprt.png",
+            video: "https://res.cloudinary.com/cloudinarysave/video/upload/v1735040766/Production%20Company/videos/umgnobiremeh0uhoztjb.mp4",
+        },
         
     ]
 
     return (
-        <div  className='flex gap-2 md:gap-5 p-2 px-5 md:px-16 ' >
+            <div className='grid grid-cols-3 gap-2 md:flex md:gap-5 md:mt-4 p-4 px-2 md:px-16'>
             {companyList.map((company) => (
-                <div key={company.id} className='relative border-[2px] border-gray-700 rounded-lg hover:scale-110 transition-all duration-300 ease-in-out cursor-pointer shadow-lg hover:shadow-2xl hover:shadow-indigo-600 shadow-indigo-700'>
-                    <video src={company.video} autoPlay loop playsInline muted   className='absolute object-cover  w-full h-full z-0 top-0 rounded-md opacity-0 hover:opacity-100' />
-                    <img src={company.image} className=' w-full h-full z-[1] opacity-100' />
-                </div>
+            <div 
+                key={company.id} 
+                className='relative border-[2px] border-gray-700 rounded-md hover:scale-110 transition-all duration-300 ease-in-out cursor-pointer md:shadow-lg hover:shadow-2xl hover:shadow-indigo-600 shadow-indigo-700'
+            >
+                <video 
+                src={company.video} 
+                autoPlay 
+                loop 
+                playsInline 
+                muted 
+                className='absolute object-cover w-full h-full z-0 top-0 rounded-md opacity-0 hover:opacity-100' 
+                />
+                <img 
+                src={company.image} 
+                className='w-full h-full z-[1] opacity-100' 
+                />
+            </div>
             ))}
         </div>
     )

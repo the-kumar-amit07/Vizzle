@@ -17,8 +17,10 @@ function Login() {
         handleSubmit,
         formState: { errors },
     } = useForm();
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const login = async (data) => {
         toast.promise(userService.loginUser(data), {
             pending: "Logging in...",
@@ -27,11 +29,11 @@ function Login() {
         }).then(async (session) => {
             if (session) {
                 const currentUser = await userService.getCurrentUser()
-                console.log("currentUser",currentUser.data);
+                // console.log("currentUser",currentUser.data);
                 if (currentUser) {
                     dispatch(authLogIn(currentUser.data));
-                    console.log("User data after dispatch:", currentUser.data); 
-                    console.log("State after dispatch:", store.getState()); // Log store state
+                    // console.log("User data after dispatch:", currentUser.data); 
+                    // console.log("State after dispatch:", store.getState()); // Log store state
                             setTimeout(() => {
                                 navigate("/");
                             }, 1000);
