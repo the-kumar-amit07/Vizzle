@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 /* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from "react";
 import { ChevronsRight, ChevronsLeft, Pause, Play } from "lucide-react";
