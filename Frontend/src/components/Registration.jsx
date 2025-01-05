@@ -37,7 +37,7 @@ function Registration() {
     }
   }, [coverImageFile])
   
-  
+
   const onNext = (data) => {
     setFormData({ ...formData, ...data });
     setStep(2);
@@ -70,7 +70,7 @@ function Registration() {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-[#040C2C]">
+    <section className="min-h-screen flex items-center justify-center bg-[#040C2C] p-8">
       <div className="w-full max-w-lg px-6 py-8 bg-[#24325E] border border-gray-200 rounded-lg shadow-md">
         <div className="px-8 py-6 text-center border-b border-gray-700">
           <h2 className="text-3xl font-semibold text-gray-100">

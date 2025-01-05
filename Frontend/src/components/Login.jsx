@@ -44,7 +44,7 @@ function Login() {
         })
     }
     return (
-        <section className="min-h-screen flex items-center justify-center bg-[#040C2C]">
+        <section className="min-h-screen flex items-center justify-center bg-[#040C2C] p-8">
             <div className="w-full max-w-md px-6 py-8 bg-[#24325E] border border-gray-200 rounded-lg shadow-md">
                 <div className="text-center">
                     <h2 className="text-3xl font-semibold text-gray-100">
