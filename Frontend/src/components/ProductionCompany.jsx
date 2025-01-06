@@ -32,9 +32,9 @@ function ProductionCompany() {
             video: "https://res.cloudinary.com/cloudinarysave/video/upload/v1735040766/Production%20Company/videos/umgnobiremeh0uhoztjb.mp4",
         },
         {
-            id: 6, //DreamWorks
-            image: "https://res.cloudinary.com/cloudinarysave/image/upload/v1735040495/Production%20Company/mhxy7fsmabm93vpsvprt.png",
-            video: "https://res.cloudinary.com/cloudinarysave/video/upload/v1735040766/Production%20Company/videos/umgnobiremeh0uhoztjb.mp4",
+            id: 6, //Legendary
+            image: "https://res.cloudinary.com/cloudinarysave/image/upload/v1736138865/Production%20Company/zbuoknvp8fnckkyepicu.png",
+            video: "https://res.cloudinary.com/cloudinarysave/video/upload/v1736138773/Production%20Company/videos/aya8gadneblskjnpjbqt.mp4",
         },
         
     ]
@@ -44,7 +44,7 @@ function ProductionCompany() {
             {companyList.map((company) => (
             <div 
                 key={company.id} 
-                className='relative border-[2px] border-gray-700 rounded-md hover:scale-110 transition-all duration-300 ease-in-out cursor-pointer md:shadow-lg hover:shadow-2xl hover:shadow-indigo-600 shadow-indigo-700'
+                className='relative border-[2px] border-gray-700 rounded-md hover:scale-110 transition-all duration-300 ease-in-out cursor-pointer md:shadow-lg hover:shadow-2xl hover:shadow-indigo-600 shadow-indigo-700 bg-indigo-950'
             >
                 <video 
                 src={company.video} 
