@@ -6,6 +6,7 @@ import { Outlet } from 'react-router-dom';
 import userService from './services/user.api.js';
 import { useDispatch } from 'react-redux';
 import { logIn } from './store/auth.slice.js';
+import {BottomNav}from './components';
 
 
 
@@ -42,7 +43,12 @@ function App() {
 
   return (
     <>
-    <Navbar/>
+      <div className='hidden md:block'>
+        <Navbar/>
+      </div>
+      <div className='block md:hidden'>
+        <BottomNav/>
+      </div>
     <Outlet/>
     </>
   )

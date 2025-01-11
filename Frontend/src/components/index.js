@@ -14,6 +14,7 @@ import VideoByCategory from "./VideoByCategory";
 import CategoryList from "./CategoryList";
 import VideoCard from "./VideoCard";
 import VerticalCard from "./VerticalCard";
+import BottomNav from "./BottomNav";
 export {
     Navbar,
     Input,
@@ -31,4 +32,5 @@ export {
     VideoCard,
     CategoryList,
     VerticalCard,
+    BottomNav,
 }
