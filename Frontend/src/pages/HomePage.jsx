@@ -4,11 +4,11 @@ import { ProductionCompany, Slider, VideoByCategory } from '../components'
 
 function HomePage() {
   return (
-    <>
+    <section className='my-14 md:my-0'>
       <Slider />
       <ProductionCompany />
       <VideoByCategory/>
-    </>
+    </section>
   )
 }
 

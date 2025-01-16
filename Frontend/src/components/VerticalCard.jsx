@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function VerticalCard({ video }) {
     const navigate = useNavigate()
     return (
-        <section className="flex flex-col items-center hover:scale-110  transition-all duration-150  ease-in ">
+        <section className="flex flex-col items-center hover:scale-105  transition-all duration-150  ease-in ">
             <img
                 onClick={()=>{navigate(`/videos/v/${video._id}`)}}
                 src={video.poster}

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import { House,Search,SquarePlus,CircleUserRound } from 'lucide-react';
+import { House, Search, SquarePlus, CircleUserRound } from 'lucide-react';
+import Logo from "../assets/Vizzle.png"
 
 function BottomNav() {
 
@@ -29,10 +30,10 @@ function BottomNav() {
 
     return (
         <div>
-            <div className='fixed top-0 left-0 z-50 h-16 bg-slate-600 border-stone-300 w-full'>
-                <h1 className='flex'>logo</h1>
+            <div className='fixed top-0 left-0 z-50 h-16 flex justify-center items-center w-full'>
+                <img src={Logo} alt="" className='w-[100px] md:w-[115px] object-cover'  />
             </div>
-            <div className='fixed bottom-0 left-0 z-50 w-full h-16 bg-slate-700 border-t border-gray-200'>
+            <div className='fixed bottom-0 left-0 z-50 w-full h-16 bg-[#040C2C] border-t border-gray-200'>
             <div className='grid h-full max-w-lg grid-cols-4 mx-auto font-medium'>
                 {menuItem.map((item) => (
                     <button key={item.id} type="button" className="inline-flex flex-col items-center justify-center px-2 hover:bg-gray-50 group">

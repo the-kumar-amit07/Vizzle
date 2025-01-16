@@ -51,7 +51,7 @@ function Slider() {
         <div>
             <ChevronLeft onClick={()=>handleSlide("left")}  className='hidden md:block text-white text-[30px] absolute left-10 top-1/2 transform -translate-y-1/2 cursor-pointer '/>
             <ChevronRight onClick={()=>handleSlide("right")}  className='hidden md:block text-white text-[30px] absolute right-8 top-1/2 transform -translate-y-1/2 cursor-pointer'/>
-            <div ref={cardRef} className='flex overflow-x-auto w-full gap-5  md:px-16 py-4 scrollbar-none scroll-smooth'>
+            <div ref={cardRef} className='flex overflow-x-auto w-full gap-5 md:px-16 py-4 scrollbar-none scroll-smooth'>
             {recentVideos.map((video) => (
                     <img key={video._id} onClick={()=>navigate(`/videos/v/${video._id}`)}  src={video.thumbnail} alt={video.title} className='md:h-[450px] min-w-full object-center md:rounded-md hover:border-[4px] border-[#3783D5] transition-all duration-100 ease-in-out' /> 
             ))}

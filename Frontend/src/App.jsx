@@ -46,10 +46,10 @@ function App() {
       <div className='hidden md:block'>
         <Navbar/>
       </div>
+      <Outlet />
       <div className='block md:hidden'>
         <BottomNav/>
       </div>
-    <Outlet/>
     </>
   )
 }
