@@ -4,8 +4,8 @@ import './index.css'
 import { Provider } from 'react-redux'
 import store from './store/store.js'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
-import { HomePage, SignUpPage, SignInPage, VideoUploadPage, ProfilePage } from './pages'
-import {VideoPlayer} from './components'
+import { HomePage, SignUpPage, SignInPage, VideoUploadPage, ProfilePage, PlayerPage } from './pages'
+// import {VideoPlayer} from './components'
 
 
 
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/videos/v/:videoId",
-        element: <VideoPlayer/>
+        element: <PlayerPage/>
       },
       {
         path: "/profile",
