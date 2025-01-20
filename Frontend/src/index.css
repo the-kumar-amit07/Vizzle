@@ -18,9 +18,9 @@
     -webkit-text-size-adjust: 100%;
     }
 body {
-    height: 100vh;
+    /* height: 100vh; */
     background-color: #040C2C;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     
     }
 

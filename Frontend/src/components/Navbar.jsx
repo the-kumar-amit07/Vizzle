@@ -39,7 +39,7 @@ function Navbar() {
     }
 
     return (
-        <div className='flex items-center justify-between p-5'>
+        <div className='flex items-center justify-between p-4 px-16'>
             <div className=' flex gap-8 items-center navItem '>
                 <img src={logo} alt="" className='w-[80px] md:w-[115px] object-cover' />
                 <div className='flex items-center gap-8 menu'>
