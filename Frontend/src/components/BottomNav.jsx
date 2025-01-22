@@ -50,7 +50,7 @@ function BottomNav() {
 
     return (
         <div>
-            <div className='fixed top-0 left-0 z-50 h-16 flex justify-center items-center w-full'>
+            <div className='fixed top-0 left-0 z-50 h-16 flex justify-center items-center w-full bg-gradient-to-b from-[#040C2C] to-transparent'>
                 <img src={Logo} alt="" className='w-[100px] md:w-[115px] object-cover'  />
             </div>
             <div className='fixed bottom-0 left-0 z-50 w-full h-16 bg-[#040C2C] border-t border-gray-200'>
