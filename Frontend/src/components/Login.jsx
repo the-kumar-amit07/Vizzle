@@ -67,7 +67,7 @@ function Login() {
                     error={errors.email?.message}
                 />
                     
-                <Input
+                {/* <Input
                     label="User Name"
                     className="bg-[#24325E]"
                     placeholder="Enter Your User Name"
@@ -75,7 +75,7 @@ function Login() {
                     required: "User Name is required",
                     })}
                     error={errors.userName?.message}
-                />
+                /> */}
                     
                 <Input
                     label="Password"

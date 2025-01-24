@@ -65,6 +65,8 @@ export class UserService {
     async logoutUser() {
         try { 
             const response = await this.apiClient.post("/api/v1/users/logout")
+            console.log("logOut response:",response);
+            
             return response.data;
         }
         catch (error) {

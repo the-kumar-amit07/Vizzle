@@ -1,15 +1,18 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { VerticalCard } from '../components';
-import userService from '../services/user.api';
+import { Button, VerticalCard } from '../components';
+import userService from '../services/user.api.js';
+import { Bounce, toast, ToastContainer } from 'react-toastify';
+import { logOut as authLogOut } from '../store/auth.slice.js';
 
 
 
 function ProfilePage() {
     const navigate = useNavigate();
     const { userData, status } = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
     // console.log("userData:", userData);
 
     const[history, setHistory] = useState([])
@@ -30,6 +33,26 @@ function ProfilePage() {
             </div>
         )
     }
+
+    const handleLogout = () => { 
+        toast.promise(
+            userService.logoutUser(),
+            {
+                pending: "Logging out...",
+                success: "Logged out successfully!",
+                error: "Logout failed! Please try again.",
+            }
+        )
+        .then(() => {
+            setTimeout(() => {
+                dispatch(authLogOut()); 
+                navigate("/login"); 
+            }, 100);
+        })
+        .catch((error) => {
+            console.error("Logout failed:", error);
+        });
+    };
 
     return (
         <div className="min-h-screen bg-gray-900 text-white">
@@ -69,6 +92,26 @@ function ProfilePage() {
                     <p className="text-gray-400 mt-2 text-sm md:text-base">No watch history available.</p>
                 )}
             </div>
+
+            <Button
+                    onClick={handleLogout}
+                    className="flex items-center justify-center w-full bg-[#3783D5] text-[#1A2A4D] py-2 rounded-md font-medium hover:bg-[#2E5C97] transition"
+                >
+                    Sign out
+            </Button>
+            <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+        />
         </div>
     );
 }
