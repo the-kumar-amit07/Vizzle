@@ -20,14 +20,12 @@ function App() {
   useEffect(() => {
     const checkUser = async () => { 
       try {
-        if (state) {
-          const loggedInUser = await userService.getCurrentUser()
-          console.log("loggedInUser:",loggedInUser.data);
-          
-          if (loggedInUser) { 
-            dispatch(logIn(loggedInUser.data))
-            setLoading(false)
-          }
+        const loggedInUser = await userService.getCurrentUser()
+        console.log("loggedInUser:",loggedInUser.data);
+        
+        if (loggedInUser) { 
+          dispatch(logIn(loggedInUser.data))
+          setLoading(false)
         }
       } catch (error) {
         if (error.response?.status === 401 || error.response?.status ===404) {
