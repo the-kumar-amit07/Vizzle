@@ -4,7 +4,7 @@ import './App.css'
 import Navbar from './components/Navbar'
 import { Outlet } from 'react-router-dom';
 import userService from './services/user.api.js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from './store/auth.slice.js';
 import {BottomNav}from './components';
 
@@ -12,16 +12,22 @@ import {BottomNav}from './components';
 
 function App() {
   const [loading, setLoading] = useState(true);
+
+  const { state } = useSelector((state) => state.auth)
+  console.log("state:",state);
+  
   const dispatch = useDispatch()
   useEffect(() => {
     const checkUser = async () => { 
       try {
-        const loggedInUser = await userService.getCurrentUser()
-        console.log("loggedInUser:",loggedInUser.data);
-        
-        if (loggedInUser) { 
-          dispatch(logIn(loggedInUser.data))
-          setLoading(false)
+        if (state) {
+          const loggedInUser = await userService.getCurrentUser()
+          console.log("loggedInUser:",loggedInUser.data);
+          
+          if (loggedInUser) { 
+            dispatch(logIn(loggedInUser.data))
+            setLoading(false)
+          }
         }
       } catch (error) {
         if (error.response?.status === 401 || error.response?.status ===404) {
