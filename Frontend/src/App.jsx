@@ -5,7 +5,7 @@ import Navbar from './components/Navbar'
 import { Outlet } from 'react-router-dom';
 import userService from './services/user.api.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { logIn } from './store/auth.slice.js';
+import { logIn, logOut } from './store/auth.slice.js';
 import {BottomNav}from './components';
 
 
@@ -13,8 +13,9 @@ import {BottomNav}from './components';
 function App() {
   const [loading, setLoading] = useState(true);
 
-  const { state } = useSelector((state) => state.auth)
-  console.log("state:",state);
+  const { userData } = useSelector((state) => state.auth)
+  // console.log("state:",state);
+  console.log("userData:",userData);
   
   const dispatch = useDispatch()
   useEffect(() => {
@@ -34,12 +35,13 @@ function App() {
         } else {
           console.error("Unexpected error:", error);
         }
+        dispatch(logOut())
       } finally {
         setLoading(false);
       }
     }
     checkUser()
-  },[])
+  },[userData])
 
   if (loading) {
     return <h1>loading....</h1>
