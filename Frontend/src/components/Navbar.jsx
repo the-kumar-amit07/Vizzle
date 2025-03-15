@@ -53,7 +53,7 @@ function Navbar() {
                 ))}
                 </div>
             </div>
-            <div >
+            <div>
                 <Avatar />
             </div>
         </div>

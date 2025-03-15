@@ -40,9 +40,9 @@ function VideoByCategory() {
             }
         }
         fetchVideos()
-    },[])
+    }, [])
+    
     const dispatch = useDispatch()
-
     const Groups = groupByCategory(videos)
     console.log("Groups of VideoCategory",Groups);
     
@@ -51,7 +51,7 @@ function VideoByCategory() {
         <section className='mt-4 md:mt-8 flex flex-col gap-4 md:gap-8'>
             {
                 Object.keys(Groups).map((category,index) => index<=4 && (
-                    <section key={category} className='flex flex-col' >  {/*  */}
+                    <section key={category} className='flex flex-col' >  
                         <h2 className='text-white text-[20px] font-bold px-2 md:px-16'>{category}</h2>
                         <div className='px-2 md:px-8'>
                         <CategoryList videos={Groups[category]} indx={index}/>
