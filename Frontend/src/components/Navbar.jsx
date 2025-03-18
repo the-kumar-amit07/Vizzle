@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useEffect } from 'react'
 import logo from "../assets/vizzle.png"
-import { House,Search,Plus } from 'lucide-react';
+import { House,Search,Plus,CircleUserRound } from 'lucide-react';
 import {Avatar} from './index.js';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
     const { userData, status } = useSelector((state) => state.auth)
+    // console.log("userData:",userData)
     const navigate = useNavigate()
     const menu = [
         {
@@ -38,6 +39,10 @@ function Navbar() {
         }
     }
 
+    useEffect(() => {
+        
+    },[])
+
     return (
         <div className='flex items-center justify-between p-4 px-16'>
             <div className=' flex gap-8 items-center navItem '>
@@ -54,7 +59,10 @@ function Navbar() {
                 </div>
             </div>
             <div>
-                <Avatar />
+                {
+                    status ? <Avatar avatarUrl={userData?.avatar} onClick={() => navigate('/profile')} />
+                    : <button onClick={() => navigate('/login')} className='text-[18px] font-semibold hover:underline underline-offset-8'>Login</button>
+                }
             </div>
         </div>
     )
